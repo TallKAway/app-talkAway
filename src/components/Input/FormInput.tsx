@@ -17,6 +17,7 @@ export const FormInput = ({ label, isPassword }: FormInputProps) => {
                 secureTextEntry={isPassword}
                 value={inputValue}
                 onChangeText={(inputValue) => setInputValue(inputValue)}
+                keyboardType="email-address"
             />
         </View>
     );
