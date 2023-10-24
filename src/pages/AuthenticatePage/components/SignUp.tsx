@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     View,
     Text,
@@ -14,16 +15,37 @@ import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const SignUp = () => {
+    const [email, setEmail] = useState<string>();
+    const [pseudo, setPseudo] = useState<string>();
+    const [password, setPassword] = useState<string>();
+    const [confirmedPassword, setConfirmedPassword] = useState<string>();
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.formWrapper}>
-                    <Text style={styles.title}>Créez un compte</Text>
-                    <FormInput label={'Email'} isPassword={false} />
-                    <FormInput label={'Pseudo'} isPassword={false} />
-                    <FormInput label={'Mot de passe'} isPassword={true} />
-                    <FormInput label={'Confirmation de mot de passe'} isPassword={true} />
+                    <Text style={styles.title}>Créer un compte</Text>
+                    <FormInput
+                        getContent={(data) => setEmail(data)}
+                        label={'Email'}
+                        isPassword={false}
+                    />
+                    <FormInput
+                        getContent={(data) => setPseudo(data)}
+                        label={'Pseudo'}
+                        isPassword={false}
+                    />
+                    <FormInput
+                        getContent={(data) => setPassword(data)}
+                        label={'Mot de passe'}
+                        isPassword={true}
+                    />
+                    <FormInput
+                        getContent={(data) => setConfirmedPassword(data)}
+                        label={'Confirmation de mot de passe'}
+                        isPassword={true}
+                    />
                     <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"
@@ -47,5 +69,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+        paddingBottom: 36,
     },
 });

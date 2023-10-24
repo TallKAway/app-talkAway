@@ -4,9 +4,10 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 interface FormInputProps {
     label: string;
     isPassword: boolean;
+    getContent: (data: string) => void;
 }
 
-export const FormInput = ({ label, isPassword }: FormInputProps) => {
+export const FormInput = ({ label, isPassword, getContent }: FormInputProps) => {
     const [inputValue, setInputValue] = useState<string>();
 
     return (
@@ -16,8 +17,7 @@ export const FormInput = ({ label, isPassword }: FormInputProps) => {
                 style={styles.textInput}
                 secureTextEntry={isPassword}
                 value={inputValue}
-                onChangeText={(inputValue) => setInputValue(inputValue)}
-                keyboardType="email-address"
+                onChangeText={(inputValue) => getContent(inputValue)}
             />
         </View>
     );
