@@ -3,9 +3,10 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface FormInputProps {
     label: string;
+    isPassword: boolean;
 }
 
-export const FormInput = ({ label }: FormInputProps) => {
+export const FormInput = ({ label, isPassword }: FormInputProps) => {
     const [inputValue, setInputValue] = useState<string>();
 
     return (
@@ -13,6 +14,7 @@ export const FormInput = ({ label }: FormInputProps) => {
             <Text style={styles.label}>{label}</Text>
             <TextInput
                 style={styles.textInput}
+                secureTextEntry={isPassword}
                 value={inputValue}
                 onChangeText={(inputValue) => setInputValue(inputValue)}
             />
@@ -23,9 +25,7 @@ export const FormInput = ({ label }: FormInputProps) => {
 const styles = StyleSheet.create({
     inputWrapper: {
         flexDirection: 'column',
-        // width: '100%',
-        // height: 'auto',
-        paddingBottom: 4,
+        paddingBottom: 20,
         justifyContent: 'space-around',
     },
     label: {
@@ -33,14 +33,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         borderWidth: 1,
-        height: 40,
+        height: 45,
         padding: 10,
         paddingTop: 10,
         borderColor: 'rgb(206, 204, 204)',
+        borderRadius: 4,
     },
-    // sendButton: {
-    //     padding: 10,
-    //     width: 20,
-    //     height: 20,
-    // },
 });

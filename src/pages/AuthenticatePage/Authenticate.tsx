@@ -11,6 +11,7 @@ export const Authenticate = () => {
 
 const styles = StyleSheet.create({
     authenticateWrapper: {
+        flex: 1,
         width: '100%',
         height: 'auto',
     },

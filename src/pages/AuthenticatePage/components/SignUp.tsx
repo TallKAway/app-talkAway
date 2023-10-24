@@ -8,7 +8,8 @@ import {
     Platform,
 } from 'react-native';
 import { FormInput } from '../../../components/Input/FormInput';
-import { PasswordInput } from '../../../components/Input/PasswordInput';
+
+import { SubmitButton } from '../../../components/Button/SubmitButton';
 
 export const SignUp = () => {
     return (
@@ -16,9 +17,11 @@ export const SignUp = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.formWrapper}>
                     <Text style={styles.title}>Créez un compte</Text>
-                    <FormInput label={'Email'} />
-                    <FormInput label={'Pseudo'} />
-                    <PasswordInput label={'Mot de passe'} />
+                    <FormInput label={'Email'} isPassword={false} />
+                    <FormInput label={'Pseudo'} isPassword={false} />
+                    <FormInput label={'Mot de passe'} isPassword={true} />
+                    <FormInput label={'Confirmation de mot de passe'} isPassword={true} />
+                    <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -27,10 +30,8 @@ export const SignUp = () => {
 
 const styles = StyleSheet.create({
     formWrapper: {
-        width: 'auto',
-        height: '100%',
-        paddingLeft: 32,
-        paddingRight: 32,
+        paddingLeft: 22,
+        paddingRight: 22,
         paddingTop: 92,
     },
     title: {
