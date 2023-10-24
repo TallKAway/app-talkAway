@@ -8,6 +8,7 @@ import {
     Platform,
 } from 'react-native';
 import { FormInput } from '../../../components/Input/FormInput';
+import { PasswordInput } from '../../../components/Input/PasswordInput';
 
 export const SignUp = () => {
     return (
@@ -17,6 +18,7 @@ export const SignUp = () => {
                     <Text style={styles.title}>Créez un compte</Text>
                     <FormInput label={'Email'} />
                     <FormInput label={'Pseudo'} />
+                    <PasswordInput label={'Mot de passe'} />
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -29,9 +31,11 @@ const styles = StyleSheet.create({
         height: '100%',
         paddingLeft: 32,
         paddingRight: 32,
+        paddingTop: 92,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
 });

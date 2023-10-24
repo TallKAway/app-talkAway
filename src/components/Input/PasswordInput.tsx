@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-interface FormInputProps {
+interface PasswordInputProps {
     label: string;
 }
 
-export const FormInput = ({ label }: FormInputProps) => {
+export const PasswordInput = ({ label }: PasswordInputProps) => {
     const [inputValue, setInputValue] = useState<string>();
 
     return (
         <View style={styles.inputWrapper}>
-            <Text style={styles.label}>{label}</Text>
+            <Text>{label}</Text>
             <TextInput
                 style={styles.textInput}
+                secureTextEntry={true}
                 value={inputValue}
                 onChangeText={(inputValue) => setInputValue(inputValue)}
             />
@@ -21,22 +22,20 @@ export const FormInput = ({ label }: FormInputProps) => {
 };
 
 const styles = StyleSheet.create({
+    textInput: {
+        borderWidth: 1,
+        height: 40,
+        // borderRadius: 18,
+        padding: 10,
+        paddingTop: 10,
+        borderColor: 'rgb(206, 204, 204)',
+    },
     inputWrapper: {
         flexDirection: 'column',
         // width: '100%',
         // height: 'auto',
         paddingBottom: 4,
         justifyContent: 'space-around',
-    },
-    label: {
-        paddingBottom: 8,
-    },
-    textInput: {
-        borderWidth: 1,
-        height: 40,
-        padding: 10,
-        paddingTop: 10,
-        borderColor: 'rgb(206, 204, 204)',
     },
     // sendButton: {
     //     padding: 10,
