@@ -6,9 +6,16 @@ interface FormInputProps {
     isPassword: boolean;
     getContent: (data: string) => void;
     validationRegex: RegExp;
+    isValidInput: (isValid: boolean | null) => void;
 }
 
-export const FormInput = ({ label, isPassword, getContent, validationRegex }: FormInputProps) => {
+export const FormInput = ({
+    label,
+    isPassword,
+    getContent,
+    validationRegex,
+    isValidInput,
+}: FormInputProps) => {
     const [inputValue, setInputValue] = useState<string>();
     const [isValid, setIsValid] = useState<boolean | null>(null);
 
@@ -27,6 +34,7 @@ export const FormInput = ({ label, isPassword, getContent, validationRegex }: Fo
                 value={inputValue}
                 onChangeText={(inputValue) => {
                     checkValue(inputValue);
+                    isValidInput(isValid);
                     getContent(inputValue);
                 }}
             />

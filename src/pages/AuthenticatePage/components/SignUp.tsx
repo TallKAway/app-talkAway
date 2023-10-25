@@ -15,17 +15,20 @@ import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const SignUp = () => {
-    const [email, setEmail] = useState<string>();
-    const [username, setUsername] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [confirmedPassword, setConfirmedPassword] = useState<string>();
+    const [email, setEmail] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confirmedPassword, setConfirmedPassword] = useState<string>('');
+    const [isFormValid, setIsFormValid] = useState<boolean | null>(false);
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const emailRegex = new RegExp('^[\\w.-]+@[\\w-]+(\\.[\\w-]{2,4})+$');
     const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
     const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
 
-    // vérifier password == confirmed Password
+    // vérifier password == confirmed Password pour enabled le bouton
+    const isPasswordConfirmed = password === confirmedPassword;
+    const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
 
     // vérifier que tous les input sont remplis avant de enabled le bouton submit
 
@@ -39,26 +42,30 @@ export const SignUp = () => {
                         label={'Email'}
                         isPassword={false}
                         validationRegex={emailRegex}
+                        isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
                     <FormInput
                         getContent={(data) => setUsername(data)}
                         label={'Pseudo'}
                         isPassword={false}
                         validationRegex={usernameRegex}
+                        isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
                     <FormInput
                         getContent={(data) => setPassword(data)}
                         label={'Mot de passe'}
                         isPassword={true}
                         validationRegex={passwordRegex}
+                        isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
                     <FormInput
                         getContent={(data) => setConfirmedPassword(data)}
                         label={'Confirmation de mot de passe'}
                         isPassword={true}
                         validationRegex={passwordRegex}
+                        isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
-                    <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
+                    <SubmitButton isDisabled={!enableSubmitButton} title={'Submit'}></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"
                         onPress={() => {
