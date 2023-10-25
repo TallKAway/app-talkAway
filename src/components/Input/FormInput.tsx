@@ -5,8 +5,9 @@ interface FormInputProps {
     label: string;
     isPassword: boolean;
     getContent: (data: string) => void;
-    validationRegex: RegExp;
-    isValidInput: (isValid: boolean | null) => void;
+    validationRegex?: RegExp;
+    isValidInput?: (isValid: boolean | null) => void;
+    errorLabel?: string;
 }
 
 export const FormInput = ({
@@ -15,13 +16,14 @@ export const FormInput = ({
     getContent,
     validationRegex,
     isValidInput,
+    errorLabel,
 }: FormInputProps) => {
     const [inputValue, setInputValue] = useState<string>();
     const [isValid, setIsValid] = useState<boolean | null>(null);
 
     const checkValue = (inputValue: string) => {
-        const isValidInput = validationRegex.test(inputValue);
-        setIsValid(isValidInput);
+        const isValidInput = validationRegex && validationRegex.test(inputValue);
+        setIsValid(isValidInput === undefined || isValidInput);
         setInputValue(inputValue);
     };
 
@@ -34,11 +36,11 @@ export const FormInput = ({
                 value={inputValue}
                 onChangeText={(inputValue) => {
                     checkValue(inputValue);
-                    isValidInput(isValid);
+                    isValidInput === undefined || isValidInput(isValid);
                     getContent(inputValue);
                 }}
             />
-            {isValid === false && <Text style={styles.errorInput}>{label} invalide</Text>}
+            {isValid === false && <Text style={styles.errorInput}>{errorLabel}</Text>}
         </View>
     );
 };

@@ -40,6 +40,7 @@ export const SignUp = () => {
                         isPassword={false}
                         validationRegex={emailRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
+                        errorLabel={"Format de l'Email invalide"}
                     />
                     <FormInput
                         getContent={(data) => setUsername(data)}
@@ -47,6 +48,7 @@ export const SignUp = () => {
                         isPassword={false}
                         validationRegex={usernameRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
+                        errorLabel={'4 caractères minimum'}
                     />
                     <FormInput
                         getContent={(data) => setPassword(data)}
@@ -54,6 +56,9 @@ export const SignUp = () => {
                         isPassword={true}
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
+                        errorLabel={
+                            'Minimum 6 caractères avec 1 majuscule, 1 caractère spécial, 1 chiffre'
+                        }
                     />
                     <FormInput
                         getContent={(data) => setConfirmedPassword(data)}
