@@ -26,11 +26,8 @@ export const SignUp = () => {
     const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
     const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
 
-    // vérifier password == confirmed Password pour enabled le bouton
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
-
-    // vérifier que tous les input sont remplis avant de enabled le bouton submit
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
