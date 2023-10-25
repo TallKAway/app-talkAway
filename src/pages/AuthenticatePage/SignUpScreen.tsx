@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 
 export const SignUpScreen = () => {
     return (
-        <View style={styles.authenticateWrapper}>
+        <SafeAreaView style={styles.authenticateWrapper}>
             <SignUp />
-        </View>
+        </SafeAreaView>
     );
 };
 

@@ -5,9 +5,9 @@ import { LogIn } from './components/LogIn';
 
 export const LogInScreen = () => {
     return (
-        <View style={styles.authenticateWrapper}>
+        <SafeAreaView style={styles.authenticateWrapper}>
             <LogIn />
-        </View>
+        </SafeAreaView>
     );
 };
 

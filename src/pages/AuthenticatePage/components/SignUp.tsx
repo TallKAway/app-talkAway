@@ -11,9 +11,10 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
+import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const SignUp = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
