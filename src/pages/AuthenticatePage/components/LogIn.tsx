@@ -6,19 +6,28 @@ import {
     Keyboard,
     KeyboardAvoidingView,
     Platform,
+    Button,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { FormInput } from '../../../components/Input/FormInput';
-
 import { SubmitButton } from '../../../components/Button/SubmitButton';
+
 export const LogIn = () => {
+    const navigation = useNavigation();
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.formWrapper}>
                     <Text style={styles.title}>Content de te revoir</Text>
                     <FormInput label={'Email'} isPassword={false} />
-                    <FormInput label={'Mot de passe'} isPassword={true} />$
+                    <FormInput label={'Mot de passe'} isPassword={true} />
                     <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
+                    <Button
+                        title="Pas encore chez nous ?"
+                        onPress={() => {
+                            navigation.navigate('Authenticate');
+                        }}
+                    ></Button>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

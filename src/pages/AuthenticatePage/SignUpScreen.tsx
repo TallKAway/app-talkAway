@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
 import { SignUp } from './components/SignUp';
+import { useNavigation } from '@react-navigation/native';
 
-export const Authenticate = () => {
+export const SignUpScreen = () => {
     return (
         <View style={styles.authenticateWrapper}>
             <SignUp />
