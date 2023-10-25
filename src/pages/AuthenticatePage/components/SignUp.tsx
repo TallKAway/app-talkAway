@@ -40,7 +40,7 @@ export const SignUp = () => {
                         isPassword={false}
                         validationRegex={emailRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={"Format de l'Email invalide"}
+                        errorLabel={"Format de l'email invalide"}
                     />
                     <FormInput
                         getContent={(data) => setUsername(data)}

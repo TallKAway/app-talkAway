@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>();
 
 export default function App() {
-    const isSignUp = false;
+    const isSignUp = true;
     return (
         <NavigationContainer>
             {!isSignUp ? (

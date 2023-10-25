@@ -36,11 +36,11 @@ export const FormInput = ({
                 value={inputValue}
                 onChangeText={(inputValue) => {
                     checkValue(inputValue);
-                    isValidInput === undefined || isValidInput(isValid);
+                    isValidInput && isValidInput(isValid);
                     getContent(inputValue);
                 }}
             />
-            {isValid === false && <Text style={styles.errorInput}>{errorLabel}</Text>}
+            {isValid === false && <Text style={styles.errorInput}>{errorLabel}</Text>} 
         </View>
     );
 };
