@@ -28,7 +28,7 @@ export const LogIn = () => {
                         onPress={() => {
                             navigation.navigate('SignUp');
                         }}
-                    ></Button>
+                    />
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
