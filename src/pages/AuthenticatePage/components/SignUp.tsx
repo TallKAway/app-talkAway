@@ -16,10 +16,18 @@ import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>();
-    const [pseudo, setPseudo] = useState<string>();
+    const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [confirmedPassword, setConfirmedPassword] = useState<string>();
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
+    const emailRegex = new RegExp('^[\\w.-]+@[\\w-]+(\\.[\\w-]{2,4})+$');
+    const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
+    const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
+
+    // vérifier password == confirmed Password
+
+    // vérifier que tous les input sont remplis avant de enabled le bouton submit
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -30,21 +38,25 @@ export const SignUp = () => {
                         getContent={(data) => setEmail(data)}
                         label={'Email'}
                         isPassword={false}
+                        validationRegex={emailRegex}
                     />
                     <FormInput
-                        getContent={(data) => setPseudo(data)}
+                        getContent={(data) => setUsername(data)}
                         label={'Pseudo'}
                         isPassword={false}
+                        validationRegex={usernameRegex}
                     />
                     <FormInput
                         getContent={(data) => setPassword(data)}
                         label={'Mot de passe'}
                         isPassword={true}
+                        validationRegex={passwordRegex}
                     />
                     <FormInput
                         getContent={(data) => setConfirmedPassword(data)}
                         label={'Confirmation de mot de passe'}
                         isPassword={true}
+                        validationRegex={passwordRegex}
                     />
                     <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
                     <Button
