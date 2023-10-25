@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SignUpScreen } from './src/pages/AuthenticatePage/SignUpScreen';
 import { LogInScreen } from './src/pages/AuthenticatePage/LogInScreen';
 import { DiscussionPage } from './src/pages/DiscussionPage/DiscussionPage';
-import { ContactPage } from './src/pages/ContactPage/ContactPage';
+import { ContactScreen } from './src/pages/ContactPage/ContactScreen';
 import {
     ScreenStackNavigatorParamList,
     ScreenStackBottomNavigatorParamList,
@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>();
 
 export default function App() {
-    const isSignUp = true;
+    const isSignUp = false;
     return (
         <NavigationContainer>
             {!isSignUp ? (
@@ -27,7 +27,7 @@ export default function App() {
                     initialRouteName="Home"
                 >
                     <TabStack.Screen name="Home" component={DiscussionPage} />
-                    <TabStack.Screen name="Contact" component={ContactPage} />
+                    <TabStack.Screen name="Contact" component={ContactScreen} />
                 </TabStack.Navigator>
             ) : (
                 <Stack.Navigator

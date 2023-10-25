@@ -1,0 +1,177 @@
+[
+    {
+        "id": 1,
+        "username": "RonaldoCR7",
+        "email": "user1@example.com",
+        "cellphone": "0679358761",
+        "password": "password123"
+    },
+    {
+        "id": 2,
+        "username": "MessiLeo10",
+        "email": "user2@example.com",
+        "cellphone": "0682749102",
+        "password": "password123"
+    },
+    {
+        "id": 3,
+        "username": "NeymarJr11",
+        "email": "user3@example.com",
+        "cellphone": "0635189274",
+        "password": "password123"
+    },
+    {
+        "id": 4,
+        "username": "MbappeKylian7",
+        "email": "user4@example.com",
+        "cellphone": "0698273651",
+        "password": "password123"
+    },
+    {
+        "id": 5,
+        "username": "SalahMo11",
+        "email": "user5@example.com",
+        "cellphone": "0612948573",
+        "password": "password123"
+    },
+    {
+        "id": 6,
+        "username": "RamosSergio4",
+        "email": "user6@example.com",
+        "cellphone": "0678319462",
+        "password": "password123"
+    },
+    {
+        "id": 7,
+        "username": "KaneHarry10",
+        "email": "user7@example.com",
+        "cellphone": "0681742937",
+        "password": "password123"
+    },
+    {
+        "id": 8,
+        "username": "Lewandowski9",
+        "email": "user8@example.com",
+        "cellphone": "0657184239",
+        "password": "password123"
+    },
+    {
+        "id": 9,
+        "username": "DeBruyne17",
+        "email": "user9@example.com",
+        "cellphone": "0637192845",
+        "password": "password123"
+    },
+    {
+        "id": 10,
+        "username": "PogbaPaul6",
+        "email": "user10@example.com",
+        "cellphone": "0618392475",
+        "password": "password123"
+    },
+    {
+        "id": 11,
+        "username": "ModricLuka10",
+        "email": "user11@example.com",
+        "cellphone": "0692475183",
+        "password": "password123"
+    },
+    {
+        "id": 12,
+        "username": "Griezmann7",
+        "email": "user12@example.com",
+        "cellphone": "0627481937",
+        "password": "password123"
+    },
+    {
+        "id": 13,
+        "username": "HazardEden10",
+        "email": "user13@example.com",
+        "cellphone": "0671392847",
+        "password": "password123"
+    },
+    {
+        "id": 14,
+        "username": "AgueroSergio10",
+        "email": "user14@example.com",
+        "cellphone": "0657284917",
+        "password": "password123"
+    },
+    {
+        "id": 15,
+        "username": "KroosToni8",
+        "email": "user15@example.com",
+        "cellphone": "0637192847",
+        "password": "password123"
+    },
+    {
+        "id": 16,
+        "username": "BenzemaKarim9",
+        "email": "user16@example.com",
+        "cellphone": "0618392745",
+        "password": "password123"
+    },
+    {
+        "id": 17,
+        "username": "KanteN'Golo7",
+        "email": "user17@example.com",
+        "cellphone": "0692475383",
+        "password": "password123"
+    },
+    {
+        "id": 18,
+        "username": "LlorisHugo1",
+        "email": "user18@example.com",
+        "cellphone": "0661284973",
+        "password": "password123"
+    },
+    {
+        "id": 19,
+        "username": "VaraneRaphael5",
+        "email": "user19@example.com",
+        "cellphone": "0658284913",
+        "password": "password123"
+    },
+    {
+        "id": 20,
+        "username": "NeuerManuel1",
+        "email": "user20@example.com",
+        "cellphone": "0628394715",
+        "password": "password123"
+    },
+    {
+        "id": 21,
+        "username": "RashfordMarcus10",
+        "email": "user21@example.com",
+        "cellphone": "0672475189",
+        "password": "password123"
+    },
+    {
+        "id": 22,
+        "username": "LukakuRomelu9",
+        "email": "user22@example.com",
+        "cellphone": "0657284916",
+        "password": "password123"
+    },
+    {
+        "id": 23,
+        "username": "AubameyangPierre14",
+        "email": "user23@example.com",
+        "cellphone": "0637192842",
+        "password": "password123"
+    },
+    {
+        "id": 24,
+        "username": "FirminoRoberto9",
+        "email": "user24@example.com",
+        "cellphone": "0618392746",
+        "password": "password123"
+    },
+    {
+        "id": 25,
+        "username": "KimmichJoshua6",
+        "email": "user25@example.com",
+        "cellphone": "0692475381",
+        "password": "password123"
+    }
+]
