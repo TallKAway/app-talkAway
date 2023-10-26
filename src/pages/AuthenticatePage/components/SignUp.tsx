@@ -24,7 +24,7 @@ export const SignUp = () => {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const emailRegex = new RegExp('^[\\w.-]+@[\\w-]+(\\.[\\w-]{2,4})+$');
-    const cellphoneRegex = new RegExp('^0\\d{9}$');
+    const cellphoneRegex = new RegExp('^+?[0-9-. ]*$');
     const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
     const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
 
@@ -37,43 +37,43 @@ export const SignUp = () => {
                 <View style={styles.formWrapper}>
                     <Text style={styles.title}>Créer un compte</Text>
                     <FormInput
-                        getContent={(data) => setEmail(data)}
                         label={'Email'}
+                        getContent={(data) => setEmail(data)}
                         isPassword={false}
                         validationRegex={emailRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={"Format de l'email invalide."}
+                        errorLabel={"Format de l'email invalide"}
                     />
                     <FormInput
-                        getContent={(data) => setUsername(data)}
                         label={'Pseudo'}
+                        getContent={(data) => setUsername(data)}
                         isPassword={false}
                         validationRegex={usernameRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={'4 caractères minimum.'}
+                        errorLabel={'4 caractères minimum'}
                     />
 
                     <FormInput
-                        getContent={(data) => setUsername(data)}
                         label={'Téléphone'}
+                        getContent={(data) => setUsername(data)}
                         isPassword={false}
                         validationRegex={cellphoneRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={'Votre numéro doit comporter 10 chiffres.'}
+                        errorLabel={'Numéro de téléphone invalide'}
                     />
                     <FormInput
-                        getContent={(data) => setPassword(data)}
                         label={'Mot de passe'}
+                        getContent={(data) => setPassword(data)}
                         isPassword={true}
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
                         errorLabel={
-                            'Minimum 6 caractères avec 1 majuscule, 1 caractère spécial, 1 chiffre.'
+                            'Minimum 6 caractères avec 1 majuscule, 1 caractère spécial, 1 chiffre'
                         }
                     />
                     <FormInput
-                        getContent={(data) => setConfirmedPassword(data)}
                         label={'Confirmation de mot de passe.'}
+                        getContent={(data) => setConfirmedPassword(data)}
                         isPassword={true}
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
