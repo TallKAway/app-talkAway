@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Button, SafeAreaView, ScrollView } from 'react-native';
 import { SignUp } from './components/SignUp';
 import { useNavigation } from '@react-navigation/native';
 
 export const SignUpScreen = () => {
     return (
         <SafeAreaView style={styles.authenticateWrapper}>
-            <SignUp />
+            <ScrollView>
+                <SignUp />
+            </ScrollView>
         </SafeAreaView>
     );
 };
