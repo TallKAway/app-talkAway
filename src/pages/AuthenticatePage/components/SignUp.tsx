@@ -78,7 +78,14 @@ export const SignUp = () => {
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
-                    <SubmitButton isDisabled={!enableSubmitButton} title={'Submit'}></SubmitButton>
+                    <SubmitButton
+                        isDisabled={!enableSubmitButton}
+                        title={'Submit'}
+                        username={username}
+                        email={email}
+                        cellphone={cellphone}
+                        password={password}
+                    ></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"
                         onPress={() => {
