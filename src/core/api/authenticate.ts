@@ -1,3 +1,4 @@
+import { TALK_AWAY_API_AUTH_URL } from '@env';
 export interface UserCrendentials {
     username: string;
     email: string;
@@ -13,6 +14,7 @@ interface BadCredentialsResponse {
 interface SuccessfulResponse {
     success: true;
     accessToken: string;
+    refreshToken: string;
 }
 
 type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse;
@@ -23,8 +25,8 @@ export const authenticate = (
     cellphone: UserCrendentials['cellphone'],
     password: UserCrendentials['password']
 ) => {
-    const endpoint = process.env.TALK_AWAY_API_USER_URL; // vérifier pourquoi le process.env ne fonctionne pas
-    return fetch('http://localhost:3005/user/user/add', {
+    const BASE_URL = TALK_AWAY_API_AUTH_URL;
+    return fetch(`${BASE_URL}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -48,7 +50,8 @@ export const authenticate = (
             return response.json().then((json) => {
                 return {
                     success: true,
-                    accessToken: json.jwt, //  access expiration 72h, refresh token expire 24h
+                    accessToken: json.accessToken, //  access expiration 72h, refresh token expire 24h
+                    refreshToken: json.refreshToken,
                 };
                 // stocker le token
             });
