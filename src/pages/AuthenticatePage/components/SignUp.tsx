@@ -17,16 +17,16 @@ import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const [cellphone, setCellphone] = useState<number>();
+    const [cellphone, setCellphone] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmedPassword, setConfirmedPassword] = useState<string>('');
     const [isFormValid, setIsFormValid] = useState<boolean | null>(false);
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const emailRegex = new RegExp('^[\\w.-]+@[\\w-]+(\\.[\\w-]{2,4})+$');
-    const cellphoneRegex = new RegExp('^+?[0-9-. ]*$');
     const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
     const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
+    const cellphoneRegex = new RegExp('^\\+?[0-9-\\. ]*');
 
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
@@ -55,7 +55,7 @@ export const SignUp = () => {
 
                     <FormInput
                         label={'Téléphone'}
-                        getContent={(data) => setUsername(data)}
+                        getContent={(data) => setCellphone(data)}
                         isPassword={false}
                         validationRegex={cellphoneRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
