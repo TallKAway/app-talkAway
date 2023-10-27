@@ -1,9 +1,9 @@
 import { TALK_AWAY_API_AUTH_URL } from '@env';
-export interface UserCrendentials {
-    username: string;
+export interface UserCredentials {
     email: string;
-    cellphone: string;
     password: string;
+    username?: string;
+    cellphone?: string;
 }
 
 interface BadCredentialsResponse {
@@ -17,16 +17,17 @@ interface SuccessfulResponse {
     refreshToken: string;
 }
 
-type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse;
+export type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse;
 
 export const authenticate = (
-    username: UserCrendentials['username'],
-    email: UserCrendentials['email'],
-    cellphone: UserCrendentials['cellphone'],
-    password: UserCrendentials['password']
+    username: UserCredentials['username'],
+    email: UserCredentials['email'],
+    cellphone: UserCredentials['cellphone'],
+    password: UserCredentials['password']
 ) => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
-    return fetch(`${BASE_URL}/register`, {
+
+    return fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

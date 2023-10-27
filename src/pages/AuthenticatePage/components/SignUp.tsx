@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
+import { UserCredentials, authenticate } from '../../../core/api/authenticate';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
@@ -30,6 +31,16 @@ export const SignUp = () => {
 
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
+
+    async function saveAuthenticateTokens({
+        username,
+        email,
+        cellphone,
+        password,
+    }: UserCredentials) {
+        const tokens = await authenticate(username, email, cellphone, password);
+        console.log('🚀 ~ file: SignUp.tsx:37 ~ saveAuthenticateTokens ~ tokens:', tokens);
+    }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -81,10 +92,9 @@ export const SignUp = () => {
                     <SubmitButton
                         isDisabled={!enableSubmitButton}
                         title={'Submit'}
-                        username={username}
-                        email={email}
-                        cellphone={cellphone}
-                        password={password}
+                        authFunc={() =>
+                            saveAuthenticateTokens({ username, email, cellphone, password })
+                        }
                     ></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"
