@@ -14,6 +14,7 @@ import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 import { UserCredentials, authenticate } from '../../../core/api/authenticate';
+import { getStoredDataValue, storeStringData } from '../../../core/utils/secureStoreData';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
@@ -39,7 +40,18 @@ export const SignUp = () => {
         password,
     }: UserCredentials) {
         const tokens = await authenticate(username, email, cellphone, password);
-        console.log('🚀 ~ file: SignUp.tsx:37 ~ saveAuthenticateTokens ~ tokens:', tokens);
+        if (tokens.success) {
+            storeStringData('accessToken', tokens.accessToken);
+            console.log(
+                '🚀 ~ file: SignUp.tsx:37 ~ saveAuthenticateTokens ~ tokens:',
+                tokens.accessToken
+            );
+            storeStringData('refreshToken', tokens.refreshToken);
+            console.log(
+                '🚀 ~ file: SignUp.tsx:50 ~ SignUp ~ tokens.refreshToken:',
+                tokens.refreshToken
+            );
+        }
     }
 
     return (
@@ -102,6 +114,16 @@ export const SignUp = () => {
                             navigation.navigate('LogIn');
                         }}
                     />
+                    {/* Boutons tests pour voir si on a bien stocké la data, à supprimer */}
+                    <Button
+                        title="store data test"
+                        onPress={() => storeStringData('test', 'test to store a data')}
+                    />
+                    <Button
+                        title="get data test"
+                        onPress={() => getStoredDataValue('accessToken')}
+                    />
+                    {/* Fin des boutons tests */}
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

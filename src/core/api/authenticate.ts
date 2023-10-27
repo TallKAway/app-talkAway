@@ -17,14 +17,18 @@ interface SuccessfulResponse {
     refreshToken: string;
 }
 
-export type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse;
+interface ErrorResponse {
+    success: false;
+}
+
+export type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse | ErrorResponse;
 
 export const authenticate = (
     username: UserCredentials['username'],
     email: UserCredentials['email'],
     cellphone: UserCredentials['cellphone'],
     password: UserCredentials['password']
-) => {
+): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
 
     return fetch(`${BASE_URL}/auth/register`, {
@@ -59,6 +63,8 @@ export const authenticate = (
         })
         .catch((e) => {
             console.log('🚀 ~ file: authenticate.ts:56 ~ e:', e);
-            return;
+            return {
+                success: false,
+            };
         });
 };
