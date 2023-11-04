@@ -25,7 +25,6 @@ export const SearchInput = ({ getContent }: SearchInputProps) => {
 const styles = StyleSheet.create({
     inputWrapper: {
         flexDirection: 'row',
-        paddingBottom: 20,
         justifyContent: 'space-around',
     },
     textInput: {

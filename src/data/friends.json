@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "username": "RonaldoCR7",
+        "email": "user1@example.com",
+        "cellphone": "0679358761",
+        "password": "password123"
+    },
+    {
+        "id": 2,
+        "username": "MessiLeo10",
+        "email": "user2@example.com",
+        "cellphone": "0682749102",
+        "password": "password123"
+    },
+    {
+        "id": 3,
+        "username": "NeymarJr11",
+        "email": "user3@example.com",
+        "cellphone": "0635189274",
+        "password": "password123"
+    },
+    {
+        "id": 4,
+        "username": "MbappeKylian7",
+        "email": "user4@example.com",
+        "cellphone": "0698273651",
+        "password": "password123"
+    }
+]
