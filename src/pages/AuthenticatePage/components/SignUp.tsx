@@ -33,7 +33,7 @@ export const SignUp = () => {
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
 
-    async function saveAuthenticateTokens({
+    async function signUpAuthenticateTokens({
         username,
         email,
         cellphone,
@@ -42,15 +42,7 @@ export const SignUp = () => {
         const tokens = await authenticate(username, email, cellphone, password);
         if (tokens.success) {
             storeStringData('accessToken', tokens.accessToken);
-            console.log(
-                '🚀 ~ file: SignUp.tsx:37 ~ saveAuthenticateTokens ~ tokens:',
-                tokens.accessToken
-            );
             storeStringData('refreshToken', tokens.refreshToken);
-            console.log(
-                '🚀 ~ file: SignUp.tsx:50 ~ SignUp ~ tokens.refreshToken:',
-                tokens.refreshToken
-            );
         }
     }
 
@@ -105,7 +97,7 @@ export const SignUp = () => {
                         isDisabled={!enableSubmitButton}
                         title={'Submit'}
                         authFunc={() =>
-                            saveAuthenticateTokens({ username, email, cellphone, password })
+                            signUpAuthenticateTokens({ username, email, cellphone, password })
                         }
                     ></SubmitButton>
                     <Button

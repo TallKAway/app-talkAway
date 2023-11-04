@@ -38,6 +38,7 @@ export default function App() {
                 >
                     <Stack.Screen name="SignUp" component={SignUpScreen} />
                     <Stack.Screen name="LogIn" component={LogInScreen} />
+                    <Stack.Screen name="Contact" component={ContactPage} />
                 </Stack.Navigator>
             )}
 

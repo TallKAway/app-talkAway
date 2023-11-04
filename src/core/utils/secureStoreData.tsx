@@ -9,8 +9,11 @@ export async function storeStringData(key: string, value: string) {
 export async function getStoredDataValue(key: string) {
     let result = await SecureStore.getItemAsync(key);
     if (result) {
-        console.log('🚀 ~ file: secureStoreData.tsx:10 ~ getValueFor ~ result:', result);
+        console.log('stored jwt');
+
+        return result;
     } else {
         console.log('No values stored under that key');
+        return;
     }
 }

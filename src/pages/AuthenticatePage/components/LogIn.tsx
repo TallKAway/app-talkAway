@@ -13,12 +13,24 @@ import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 import { useState } from 'react';
+import { login } from '../../../core/api/login/login';
+import { UserCredentials } from '../../../core/api/authenticate';
 
 export const LogIn = () => {
     const [email, setEmail] = useState<string>('');
-
     const [password, setPassword] = useState<string>('');
+
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
+    async function loginUser({ email, password }: UserCredentials) {
+        console.log('🚀 ~ file: LogIn.tsx:26 ~ loginUser ~ password:', password);
+        console.log('🚀 ~ file: LogIn.tsx:26 ~ loginUser ~ email:', email);
+
+        await login(email, password);
+        navigation.navigate('Contact');
+        console.log('login user');
+    }
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -34,7 +46,11 @@ export const LogIn = () => {
                         label={'Mot de passe'}
                         isPassword={true}
                     />
-                    <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
+                    <SubmitButton
+                        isDisabled={false}
+                        title={'Submit'}
+                        authFunc={() => loginUser({ email, password })}
+                    ></SubmitButton>
                     <Button
                         title="Pas encore chez nous ?"
                         onPress={() => {
