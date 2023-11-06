@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     contactItem: {
         flexDirection: 'row',
         height: 65,
-        padding: 10,
         paddingTop: 10,
         borderColor: 'rgb(206, 204, 204)',
         borderRadius: 4,
