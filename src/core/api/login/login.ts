@@ -4,29 +4,35 @@ import { getStoredDataValue } from '../../utils/secureStoreData';
 
 export const login = (email: string, password: string) => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
-    const accessToken = getStoredDataValue('accessToken');
+    // const accessToken = getStoredDataValue('accessToken');
 
-    return fetch(`${BASE_URL}/auth/login`, {
+    return fetch(`${BASE_URL}:3002/auth/login`, {
         method: 'POST',
         headers: {
-            Authorization: 'Bearer ' + accessToken,
+            // Authorization: 'Bearer ' + accessToken,
             Accept: 'application/json',
         },
         body: JSON.stringify({ email, password }),
-    }).then((response) => {
-        if (!response.ok) {
-            throw {
-                response: response,
-                error: new Error(
-                    `Error: ${response.url} ${response.status} ${response.statusText}`
-                ),
-            };
-        }
-        console.log('json', response.json());
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw {
+                    response: response,
+                    error: new Error(
+                        `Error: ${response.url} ${response.status} ${response.statusText}`
+                    ),
+                };
+            }
 
-        return response.json().then((json) => {
-            console.log('json login', json);
-            return json;
+            return response.json().then((json) => {
+                console.log('json login', json);
+                return json;
+            });
+        })
+        .catch((e) => {
+            console.log('🚀 ~ file: authenticate.ts:56 ~ e:', e);
+            return {
+                success: false,
+            };
         });
-    });
 };

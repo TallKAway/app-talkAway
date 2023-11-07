@@ -23,12 +23,8 @@ export const LogIn = () => {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     async function loginUser({ email, password }: UserCredentials) {
-        console.log('🚀 ~ file: LogIn.tsx:26 ~ loginUser ~ password:', password);
-        console.log('🚀 ~ file: LogIn.tsx:26 ~ loginUser ~ email:', email);
-
         await login(email, password);
         navigation.navigate('Contact');
-        console.log('login user');
     }
 
     return (

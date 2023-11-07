@@ -31,7 +31,7 @@ export const authenticate = (
 ): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
 
-    return fetch(`${BASE_URL}/auth/register`, {
+    return fetch(`${BASE_URL}:3002/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
