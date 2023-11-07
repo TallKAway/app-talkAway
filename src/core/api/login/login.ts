@@ -30,7 +30,6 @@ export const login = (email: string, password: string) => {
             });
         })
         .catch((e) => {
-            console.log('🚀 ~ file: authenticate.ts:56 ~ e:', e);
             return {
                 success: false,
             };

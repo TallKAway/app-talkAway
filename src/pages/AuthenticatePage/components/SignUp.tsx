@@ -106,16 +106,6 @@ export const SignUp = () => {
                             navigation.navigate('LogIn');
                         }}
                     />
-                    {/* Boutons tests pour voir si on a bien stocké la data, à supprimer */}
-                    <Button
-                        title="store data test"
-                        onPress={() => storeStringData('test', 'test to store a data')}
-                    />
-                    <Button
-                        title="get data test"
-                        onPress={() => getStoredDataValue('accessToken')}
-                    />
-                    {/* Fin des boutons tests */}
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
