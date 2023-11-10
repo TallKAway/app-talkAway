@@ -5,6 +5,7 @@ interface DataProps {
         id: number;
         sender: string;
         content: string;
+        timestamp: number;
     };
 }
 
@@ -12,6 +13,18 @@ export const MessageArea = ({ data }: DataProps) => {
     // const { user } = useUserContext();
 
     const user = 'me';
+    const date = new Date();
+
+    const handleTimeStampToDate = (date: number) => {
+        const messageDate = new Date(date);
+
+        const messageDateFormatted = messageDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+        });
+
+        return messageDateFormatted;
+    };
 
     return (
         <View style={data.sender === user ? styles.container : styles.notMeContainer}>
@@ -24,6 +37,10 @@ export const MessageArea = ({ data }: DataProps) => {
                 <Text style={data.sender === user ? styles.message : styles.notMeMessage}>
                     {data.content}
                 </Text>
+            </View>
+
+            <View style={styles.timestampContainer}>
+                <Text style={styles.timestamp}>{handleTimeStampToDate(data.timestamp)}</Text>
             </View>
         </View>
     );
@@ -39,15 +56,15 @@ const styles = StyleSheet.create({
     box: {
         maxWidth: '70%',
         padding: 14,
-        margin: 8,
+        margin: 6,
         borderRadius: 20,
         justifyContent: 'center',
-        backgroundColor: 'rgb(0, 118, 246)',
+        backgroundColor: 'rgb(87, 101, 242)',
     },
     notMeBox: {
         maxWidth: '70%',
         padding: 14,
-        margin: 8,
+        margin: 6,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'flex-start',
@@ -57,7 +74,8 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     notMeSender: {
-        paddingLeft: 14,
+        paddingTop: 14,
+        paddingLeft: 6,
         color: 'rgb(200, 200, 200)',
     },
     message: {
@@ -65,5 +83,13 @@ const styles = StyleSheet.create({
     },
     notMeMessage: {
         color: 'black',
+    },
+    timestampContainer: {
+        paddingHorizontal: 14,
+    },
+
+    timestamp: {
+        alignSelf: 'flex-end',
+        fontSize: 10,
     },
 });

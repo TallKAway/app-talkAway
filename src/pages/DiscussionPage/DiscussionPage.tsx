@@ -19,6 +19,7 @@ interface MessagesProps {
     id: number;
     sender: string;
     content: string;
+    timestamp: number;
 }
 
 export const DiscussionPage = () => {
