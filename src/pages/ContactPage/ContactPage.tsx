@@ -9,7 +9,7 @@ export const ContactPage = () => {
             <Button
                 title="Get token"
                 onPress={() => {
-                    getCredentials('accessToken');
+                    getCredentials();
                 }}
             />
         </SafeAreaView>

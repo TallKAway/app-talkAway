@@ -7,13 +7,15 @@ export async function setCredentials(key: string, value: string) {
     await SecureStore.setItemAsync(key, value);
 }
 
-export async function getCredentials(key: keyof CredentialsToken) {
+export async function getCredentials() {
     try {
-        const credentials = await SecureStore.getItemAsync(key);
-        const refreshedCredentials = credentials && (await checkTokenValidity(credentials));
+        const accessToken = await SecureStore.getItemAsync('accessToken');
+        const refreshToken = await SecureStore.getItemAsync('refreshToken');
 
-        if (credentials !== null && refreshedCredentials !== null) {
-            return refreshedCredentials;
+        if (accessToken !== null && refreshToken !== null) {
+            const credentials: CredentialsToken = { accessToken, refreshToken };
+
+            checkTokenValidity(credentials);
         }
     } catch (error) {
         console.log(error);
@@ -37,37 +39,35 @@ async function getAccessTokenUsingRefresh(refreshToken: CredentialsToken['refres
 }
 
 function isTokenExpired(token: string) {
-    const decodedToken = jwtDecode(token);
-    console.log('🚀 ~ file: credentials.tsx:41 ~ isTokenExpired ~ decodedToken:', decodedToken);
+    try {
+        const decodedToken = jwtDecode(token);
+        console.log('🚀 ~ file: credentials.tsx:41 ~ isTokenExpired ~ decodedToken:', decodedToken);
 
-    const tokenIsExpired = decodedToken.exp < Date.now() / 1000;
+        const tokenIsExpired = decodedToken.exp < Date.now() / 1000;
 
-    if (tokenIsExpired) {
-        return true;
+        if (tokenIsExpired) {
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log('🚀 ~ file: credentials.tsx:57 ~ isTokenExpired ~ error:', error);
     }
-    return false;
 }
 
-async function checkTokenValidity(keys: CredentialsToken) {
-    console.log('Loading keys from storage');
-    if (!keys) {
-        console.log('access not available, please login');
-        return null;
-    }
-
-    console.log('checking access');
-    if (!isTokenExpired(keys.accessToken)) {
+async function checkTokenValidity(credentials: CredentialsToken) {
+    if (!isTokenExpired(credentials.accessToken)) {
         console.log('returning access');
-        return keys;
+        return credentials;
     }
 
     console.log('access expired');
     console.log('checking refresh expiry');
 
-    if (!isTokenExpired(keys.refreshToken)) {
+    if (!isTokenExpired(credentials.refreshToken)) {
         console.log('fetching access using refresh');
-        const response = await getAccessTokenUsingRefresh(keys.refreshToken);
-        await SecureStore.setItemAsync('keys', JSON.stringify(response));
+        const response = await getAccessTokenUsingRefresh(credentials.refreshToken);
+        await SecureStore.setItemAsync('accessToken', response.accessToken);
+        await SecureStore.setItemAsync('refreshToken', response.refreshToken);
         console.log('UPDATED ONE');
         return response;
     }
