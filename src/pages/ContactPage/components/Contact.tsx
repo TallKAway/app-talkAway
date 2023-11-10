@@ -34,7 +34,7 @@ export const Contact = () => {
                         }
                     />
                     <Button
-                        title="click batard"
+                        title="discussion with billy"
                         onPress={() => {
                             navigation.navigate('Home', { userName: 'billy' });
                         }}

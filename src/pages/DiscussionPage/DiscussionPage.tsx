@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
     View,
-    Text,
     SafeAreaView,
     FlatList,
     KeyboardAvoidingView,
@@ -9,12 +8,12 @@ import {
     Platform,
     Keyboard,
     StyleSheet,
-    Button,
 } from 'react-native';
-import { BackButton } from '../../components/Button/BackButton';
+
 import messages from '../../messageData/messages.json';
 import { FormArea } from './components/FormArea';
 import { MessageArea } from './components/MessageArea';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 interface MessagesProps {
     id: number;
@@ -23,6 +22,7 @@ interface MessagesProps {
 }
 
 export const DiscussionPage = () => {
+    const headerheight = useHeaderHeight();
     const [messageData, setMessageData] = useState<MessagesProps[]>([]);
 
     useEffect(() => {
@@ -39,6 +39,7 @@ export const DiscussionPage = () => {
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={headerheight}
                 style={styles.keyboard}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
