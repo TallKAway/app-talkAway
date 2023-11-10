@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { PropsWithChildren } from 'react';
-
+import BackButtonSVG from '../../common/svg/left-arrow.svg';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScreenStackBottomNavigatorProps } from '../../domains/Navigation';
 
@@ -28,7 +28,7 @@ export const HeaderButton = ({ title, path }: HeaderButtonProps) => {
                 }}
             >
                 <View>
-                    <Text style={styles.textButton}>Back</Text>
+                    <BackButtonSVG width={20} height={20} />
                 </View>
             </TouchableOpacity>
         </View>
