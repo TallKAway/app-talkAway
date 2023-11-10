@@ -9,19 +9,21 @@ import {
     Platform,
     Keyboard,
     StyleSheet,
+    Button,
 } from 'react-native';
+import { BackButton } from '../../components/Button/BackButton';
 import messages from '../../messageData/messages.json';
 import { Discussion } from './components/FormArea';
 import { MessageArea } from './components/MessageArea';
 
-interface DataProps {
+interface MessagesProps {
     id: number;
     sender: string;
     content: string;
 }
 
 export const DiscussionPage = () => {
-    const [messageData, setMessageData] = useState<DataProps[]>([]);
+    const [messageData, setMessageData] = useState<MessagesProps[]>([]);
 
     useEffect(() => {
         setMessageData(messages);
@@ -61,11 +63,11 @@ const styles = StyleSheet.create({
         flex: 2,
         width: '100%',
         borderRadius: 6,
-        marginTop: 20,
+        paddingTop: 20,
     },
 
     input: {
-        width: '100%',
+        width: 'auto',
         justifyContent: 'flex-end',
     },
 

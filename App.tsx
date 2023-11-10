@@ -22,11 +22,19 @@ export default function App() {
             {!isSignUp ? (
                 <TabStack.Navigator
                     screenOptions={{
-                        headerShown: false,
+                        headerShown: true,
                     }}
                     initialRouteName="Home"
                 >
-                    <TabStack.Screen name="Home" component={DiscussionPage} />
+                    <TabStack.Screen
+                        name="Home"
+                        component={DiscussionPage}
+                        options={({ navigation, route }) => ({
+                            headerTitle: (props) => <Text>Billy</Text>,
+                            // Add a placeholder button without the `onPress` to avoid flicker
+                            headerLeft: () => <Text>Back</Text>,
+                        })}
+                    />
                     <TabStack.Screen name="Contact" component={ContactScreen} />
                 </TabStack.Navigator>
             ) : (
