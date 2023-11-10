@@ -1,27 +1,5 @@
 import { TALK_AWAY_API_AUTH_URL } from '@env';
-export interface UserCredentials {
-    email: string;
-    password: string;
-    username?: string;
-    cellphone?: string;
-}
-
-interface BadCredentialsResponse {
-    success: false;
-    error: 'BAD_CREDENTIALS';
-}
-
-interface SuccessfulResponse {
-    success: true;
-    accessToken: string;
-    refreshToken: string;
-}
-
-interface ErrorResponse {
-    success: false;
-}
-
-export type AuthenticationResponse = BadCredentialsResponse | SuccessfulResponse | ErrorResponse;
+import { AuthenticationResponse, UserCredentials } from '../../domains/Credentials';
 
 export const authenticate = (
     username: UserCredentials['username'],
@@ -31,7 +9,7 @@ export const authenticate = (
 ): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
 
-    return fetch(`${BASE_URL}:3002/auth/register`, {
+    return fetch(`https://api-tallkaway.koyeb.app/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -55,16 +33,15 @@ export const authenticate = (
             return response.json().then((json) => {
                 return {
                     success: true,
-                    accessToken: json.accessToken, //  access expiration 72h, refresh token expire 24h
+                    accessToken: json.accessToken,
                     refreshToken: json.refreshToken,
                 };
-                // stocker le token
             });
         })
         .catch((e) => {
-            console.log('🚀 ~ file: authenticate.ts:56 ~ e:', e);
             return {
                 success: false,
+                error: e.error.message || 'An error occurred during signup.',
             };
         });
 };

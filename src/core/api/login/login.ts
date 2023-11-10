@@ -1,20 +1,28 @@
 import { TALK_AWAY_API_AUTH_URL } from '@env';
+import { AuthenticationResponse, UserCredentials } from '../../../domains/Credentials';
 
-import { getStoredDataValue } from '../../utils/secureStoreData';
-
-export const login = (email: string, password: string) => {
+export const login = (
+    email: UserCredentials['email'],
+    password: UserCredentials['password']
+): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_AUTH_URL;
-    // const accessToken = getStoredDataValue('accessToken');
 
-    return fetch(`${BASE_URL}:3002/auth/login`, {
+    return fetch(`https://api-tallkaway.koyeb.app/auth/login`, {
         method: 'POST',
         headers: {
-            // Authorization: 'Bearer ' + accessToken,
             Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
     })
-        .then((response) => {
+        .then((response: Response): Promise<AuthenticationResponse> => {
+            if (response.status === 401) {
+                return Promise.resolve({
+                    success: false,
+                    error: 'BAD_CREDENTIALS',
+                });
+            }
+
             if (!response.ok) {
                 throw {
                     response: response,
@@ -25,13 +33,17 @@ export const login = (email: string, password: string) => {
             }
 
             return response.json().then((json) => {
-                console.log('json login', json);
-                return json;
+                return {
+                    success: true,
+                    accessToken: json.accessToken,
+                    refreshToken: json.refreshToken,
+                };
             });
         })
         .catch((e) => {
             return {
                 success: false,
+                error: e.error.message || 'An error occurred during login.',
             };
         });
 };

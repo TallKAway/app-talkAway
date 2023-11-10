@@ -1,20 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
+    Button,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    Button,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
+import { FormInput } from '../../../components/Input/FormInput';
+import { authenticate } from '../../../core/api/authenticate';
+import { setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
-import { UserCredentials, authenticate } from '../../../core/api/authenticate';
-import { getStoredDataValue, storeStringData } from '../../../core/utils/secureStoreData';
+import { UserCredentials } from '../../../domains/Credentials';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
@@ -33,16 +34,11 @@ export const SignUp = () => {
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
 
-    async function signUpAuthenticateTokens({
-        username,
-        email,
-        cellphone,
-        password,
-    }: UserCredentials) {
+    async function signUpUser({ username, email, cellphone, password }: UserCredentials) {
         const tokens = await authenticate(username, email, cellphone, password);
         if (tokens.success) {
-            storeStringData('accessToken', tokens.accessToken);
-            storeStringData('refreshToken', tokens.refreshToken);
+            setCredentials('accessToken', tokens.accessToken);
+            setCredentials('refreshToken', tokens.refreshToken);
         }
     }
 
@@ -96,9 +92,7 @@ export const SignUp = () => {
                     <SubmitButton
                         isDisabled={!enableSubmitButton}
                         title={'Submit'}
-                        authFunc={() =>
-                            signUpAuthenticateTokens({ username, email, cellphone, password })
-                        }
+                        authFunc={() => signUpUser({ username, email, cellphone, password })}
                     ></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"

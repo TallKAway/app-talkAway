@@ -1,20 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
+    Button,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    Button,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
-import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
-import { useState } from 'react';
+import { FormInput } from '../../../components/Input/FormInput';
 import { login } from '../../../core/api/login/login';
-import { UserCredentials } from '../../../core/api/authenticate';
+import { setCredentials } from '../../../core/utils/credentials';
+import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
+import { UserCredentials } from '../../../domains/Credentials';
 
 export const LogIn = () => {
     const [email, setEmail] = useState<string>('');
@@ -23,8 +24,12 @@ export const LogIn = () => {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     async function loginUser({ email, password }: UserCredentials) {
-        await login(email, password);
-        navigation.navigate('Contact');
+        const tokens = await login(email, password);
+        if (tokens.success) {
+            setCredentials('accessToken', tokens.accessToken);
+            setCredentials('refreshToken', tokens.refreshToken);
+            navigation.navigate('Contact');
+        }
     }
 
     return (
