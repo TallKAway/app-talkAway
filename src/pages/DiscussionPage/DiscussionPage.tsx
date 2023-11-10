@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { BackButton } from '../../components/Button/BackButton';
 import messages from '../../messageData/messages.json';
-import { Discussion } from './components/FormArea';
+import { FormArea } from './components/FormArea';
 import { MessageArea } from './components/MessageArea';
 
 interface MessagesProps {
@@ -43,7 +43,7 @@ export const DiscussionPage = () => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.input}>
-                        <Discussion />
+                        <FormArea />
                     </View>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 
-export const Discussion = () => {
+export const FormArea = () => {
     const [messageValue, setMessageValue] = useState('');
     const [allMessage, setallMessage] = useState([]);
     return (

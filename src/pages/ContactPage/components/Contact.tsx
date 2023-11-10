@@ -7,13 +7,17 @@ import {
     KeyboardAvoidingView,
     Platform,
     FlatList,
+    Button,
 } from 'react-native';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { SearchInput } from '../../../components/Input/SearchInput';
+import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 import users from '../../../data/users.json';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
+    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -29,6 +33,12 @@ export const Contact = () => {
                             ) : null
                         }
                     />
+                    <Button
+                        title="click batard"
+                        onPress={() => {
+                            navigation.navigate('Home', { userName: 'billy' });
+                        }}
+                    ></Button>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

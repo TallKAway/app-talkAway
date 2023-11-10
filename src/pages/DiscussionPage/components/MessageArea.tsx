@@ -11,7 +11,7 @@ interface DataProps {
 export const MessageArea = ({ data }: DataProps) => {
     // const { user } = useUserContext();
 
-    const user = 'Louis';
+    const user = 'me';
 
     return (
         <View style={data.sender === user ? styles.container : styles.notMeContainer}>

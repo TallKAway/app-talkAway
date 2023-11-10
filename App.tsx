@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SignUpScreen } from './src/pages/AuthenticatePage/SignUpScreen';
 import { LogInScreen } from './src/pages/AuthenticatePage/LogInScreen';
 import { DiscussionPage } from './src/pages/DiscussionPage/DiscussionPage';
+import { HeaderName, HeaderButton } from './src/components/Header/Header';
 import { ContactScreen } from './src/pages/ContactPage/ContactScreen';
 import {
     ScreenStackNavigatorParamList,
     ScreenStackBottomNavigatorParamList,
 } from './src/domains/Navigation';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -17,6 +18,7 @@ const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>()
 
 export default function App() {
     const isSignUp = false;
+
     return (
         <NavigationContainer>
             {!isSignUp ? (
@@ -24,15 +26,24 @@ export default function App() {
                     screenOptions={{
                         headerShown: true,
                     }}
-                    initialRouteName="Home"
+                    initialRouteName="Contact"
                 >
                     <TabStack.Screen
                         name="Home"
                         component={DiscussionPage}
+                        initialParams={{ userName: '' }}
                         options={({ navigation, route }) => ({
-                            headerTitle: (props) => <Text>Billy</Text>,
+                            headerTitle: (props) =>
+                                route.params.userName ? (
+                                    <HeaderName>{route.params.userName}</HeaderName>
+                                ) : (
+                                    <Text>Default Title</Text>
+                                ),
                             // Add a placeholder button without the `onPress` to avoid flicker
-                            headerLeft: () => <Text>Back</Text>,
+                            headerLeft: () => (
+                                <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
+                            ),
+                            tabBarStyle: { display: 'none' },
                         })}
                     />
                     <TabStack.Screen name="Contact" component={ContactScreen} />
