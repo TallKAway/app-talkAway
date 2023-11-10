@@ -1,0 +1,34 @@
+[
+    { "id": 1, "sender": "me", "content": "salut je suis le sender 424" },
+    {
+        "id": 2,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    {
+        "id": 3,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    {
+        "id": 4,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    {
+        "id": 5,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    {
+        "id": 6,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    {
+        "id": 7,
+        "sender": "billy",
+        "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324"
+    },
+    { "id": 8, "sender": "billy", "content": "salut je suis le sender,fo,zpfozfo dizifj fzjf  324" }
+]
