@@ -1,4 +1,4 @@
-import { TALK_AWAY_API_AUTH_URL } from '@env';
+import { TALK_AWAY_API_BASE_URL } from '@env';
 import { AuthenticationResponse, UserCredentials } from '../../domains/Credentials';
 
 export const authenticate = (
@@ -7,9 +7,9 @@ export const authenticate = (
     cellphone: UserCredentials['cellphone'],
     password: UserCredentials['password']
 ): Promise<AuthenticationResponse> => {
-    const BASE_URL = TALK_AWAY_API_AUTH_URL;
+    const BASE_URL = TALK_AWAY_API_BASE_URL;
 
-    return fetch(`https://api-tallkaway.koyeb.app/auth/register`, {
+    return fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -39,6 +39,7 @@ export const SignUp = () => {
         if (tokens.success) {
             setCredentials('accessToken', tokens.accessToken);
             setCredentials('refreshToken', tokens.refreshToken);
+            navigation.navigate('Contact');
         }
     }
 
@@ -61,7 +62,7 @@ export const SignUp = () => {
                         isPassword={false}
                         validationRegex={usernameRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={'4 caractères minimum'}
+                        errorLabel={'4 caractères minimum, pas de majuscules'}
                     />
 
                     <FormInput
@@ -83,7 +84,7 @@ export const SignUp = () => {
                         }
                     />
                     <FormInput
-                        label={'Confirmation de mot de passe.'}
+                        label={'Confirmation de mot de passe'}
                         getContent={(data) => setConfirmedPassword(data)}
                         isPassword={true}
                         validationRegex={passwordRegex}

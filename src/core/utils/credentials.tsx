@@ -1,17 +1,16 @@
 import * as SecureStore from 'expo-secure-store';
 import { jwtDecode } from 'jwt-decode';
-import { TALK_AWAY_API_AUTH_URL } from '@env';
+import { TALK_AWAY_API_BASE_URL } from '@env';
 import { CredentialsToken } from '../../domains/Credentials';
 
 export async function setCredentials(key: string, value: string) {
     await SecureStore.setItemAsync(key, value);
 }
 
-export async function getCredentials(key: string) {
+export async function getCredentials(key: keyof CredentialsToken) {
     try {
         const credentials = await SecureStore.getItemAsync(key);
-        const refreshedCredentials =
-            credentials && (await checkTokenValidity(JSON.parse(credentials)));
+        const refreshedCredentials = credentials && (await checkTokenValidity(credentials));
 
         if (credentials !== null && refreshedCredentials !== null) {
             return refreshedCredentials;
@@ -24,9 +23,9 @@ export async function getCredentials(key: string) {
 }
 
 async function getAccessTokenUsingRefresh(refreshToken: CredentialsToken['refreshToken']) {
-    const BASE_URL = TALK_AWAY_API_AUTH_URL;
+    const BASE_URL = TALK_AWAY_API_BASE_URL;
 
-    const response = await fetch(`https://api-tallkaway.koyeb.app/auth/refreshToken`, {
+    const response = await fetch(`${BASE_URL}/auth/refreshToken`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -39,6 +38,8 @@ async function getAccessTokenUsingRefresh(refreshToken: CredentialsToken['refres
 
 function isTokenExpired(token: string) {
     const decodedToken = jwtDecode(token);
+    console.log('🚀 ~ file: credentials.tsx:41 ~ isTokenExpired ~ decodedToken:', decodedToken);
+
     const tokenIsExpired = decodedToken.exp < Date.now() / 1000;
 
     if (tokenIsExpired) {
