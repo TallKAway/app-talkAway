@@ -1,6 +1,6 @@
-import * as SecureStore from 'expo-secure-store';
-import { jwtDecode } from 'jwt-decode';
 import { TALK_AWAY_API_BASE_URL } from '@env';
+import * as SecureStore from 'expo-secure-store';
+import { isExpired } from 'react-jwt';
 import { CredentialsToken } from '../../domains/Credentials';
 
 export async function setCredentials(key: string, value: string) {
@@ -14,11 +14,10 @@ export async function getCredentials() {
 
         if (accessToken !== null && refreshToken !== null) {
             const credentials: CredentialsToken = { accessToken, refreshToken };
-
             checkTokenValidity(credentials);
         }
     } catch (error) {
-        console.log(error);
+        throw new Error('Error getting credentials');
     }
 
     return null;
@@ -35,43 +34,40 @@ async function getAccessTokenUsingRefresh(refreshToken: CredentialsToken['refres
         body: JSON.stringify(refreshToken),
     });
 
-    return response.json();
+    return response.json().then((json) => {
+        return {
+            success: true,
+            accessToken: json.accessToken,
+            refreshToken: json.refreshToken,
+        };
+    });
 }
 
 function isTokenExpired(token: string) {
     try {
-        const decodedToken = jwtDecode(token);
-        console.log('🚀 ~ file: credentials.tsx:41 ~ isTokenExpired ~ decodedToken:', decodedToken);
+        const ismyTokenExpired = isExpired(token);
 
-        const tokenIsExpired = decodedToken.exp < Date.now() / 1000;
-
-        if (tokenIsExpired) {
+        if (ismyTokenExpired) {
             return true;
         }
         return false;
     } catch (error) {
-        console.log('🚀 ~ file: credentials.tsx:57 ~ isTokenExpired ~ error:', error);
+        throw new Error('Error checking token expiration');
     }
 }
 
 async function checkTokenValidity(credentials: CredentialsToken) {
     if (!isTokenExpired(credentials.accessToken)) {
-        console.log('returning access');
         return credentials;
     }
 
-    console.log('access expired');
-    console.log('checking refresh expiry');
-
     if (!isTokenExpired(credentials.refreshToken)) {
-        console.log('fetching access using refresh');
         const response = await getAccessTokenUsingRefresh(credentials.refreshToken);
         await SecureStore.setItemAsync('accessToken', response.accessToken);
         await SecureStore.setItemAsync('refreshToken', response.refreshToken);
-        console.log('UPDATED ONE');
+
         return response;
     }
 
-    console.log('refresh expired, please login');
     return null;
 }

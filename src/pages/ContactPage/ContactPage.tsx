@@ -6,6 +6,7 @@ export const ContactPage = () => {
     return (
         <SafeAreaView>
             <Text>Hello World</Text>
+
             <Button
                 title="Get token"
                 onPress={() => {
