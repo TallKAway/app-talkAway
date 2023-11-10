@@ -10,29 +10,24 @@ interface DataProps {
 }
 
 export const MessageArea = ({ data }: DataProps) => {
-    // const { user } = useUserContext();
-
     const user = 'me';
-    const date = new Date();
 
     const handleTimeStampToDate = (date: number) => {
         const messageDate = new Date(date);
-
         const messageDateFormatted = messageDate.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
         });
-
         return messageDateFormatted;
     };
 
     return (
         <View style={data.sender === user ? styles.container : styles.notMeContainer}>
-            {data.sender !== user ? (
+            {/* {data.sender !== user ? (
                 <View>
                     <Text style={styles.notMeSender}>{data.sender}</Text>
                 </View>
-            ) : null}
+            ) : null} */}
             <View style={data.sender === user ? styles.box : styles.notMeBox}>
                 <Text style={data.sender === user ? styles.message : styles.notMeMessage}>
                     {data.content}
