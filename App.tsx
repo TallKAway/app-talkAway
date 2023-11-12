@@ -17,11 +17,12 @@ const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>();
 
 export default function App() {
-    const isSignUp = false;
+    const isSignUp = true;
 
     return (
         <NavigationContainer>
-            {!isSignUp ? (
+            <StatusBar style="auto" />
+            {isSignUp ? (
                 <TabStack.Navigator
                     screenOptions={{
                         headerShown: true,
@@ -29,17 +30,18 @@ export default function App() {
                     initialRouteName="Contact"
                 >
                     <TabStack.Screen
-                        name="Home"
+                        name="Discussion"
                         component={DiscussionPage}
                         initialParams={{ userName: '' }}
-                        options={({ navigation, route }) => ({
-                            headerTitle: (props) =>
+                        options={({ route }) => ({
+                            headerTitle: () =>
                                 route.params.userName ? (
-                                    <HeaderName>{route.params.userName}</HeaderName>
+                                    <HeaderName>
+                                        {route.params.userName + ' ' + route.params.id}
+                                    </HeaderName>
                                 ) : (
                                     <Text>Default Title</Text>
                                 ),
-                            // Add a placeholder button without the `onPress` to avoid flicker
                             headerLeft: () => (
                                 <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
                             ),
@@ -59,8 +61,6 @@ export default function App() {
                     <Stack.Screen name="LogIn" component={LogInScreen} />
                 </Stack.Navigator>
             )}
-
-            <StatusBar style="auto" />
         </NavigationContainer>
     );
 }

@@ -17,6 +17,8 @@ import users from '../../../data/users.json';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
+    const [friendName, setFriendName] = useState<string>('Billy');
+    const [friendId, setFriendId] = useState<string>('');
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
 
     return (
@@ -34,9 +36,12 @@ export const Contact = () => {
                         }
                     />
                     <Button
-                        title="discussion with billy"
+                        title={`discussion with ${friendName}`}
                         onPress={() => {
-                            navigation.navigate('Home', { userName: 'billy' });
+                            navigation.navigate('Discussion', {
+                                userName: friendName,
+                                id: friendId,
+                            });
                         }}
                     ></Button>
                 </View>
