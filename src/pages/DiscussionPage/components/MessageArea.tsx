@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+
 
 interface DataProps {
     data: {
@@ -11,7 +13,6 @@ interface DataProps {
 
 export const MessageArea = ({ data }: DataProps) => {
     const user = 'me';
-
     const handleTimeStampToDate = (date: number) => {
         const messageDate = new Date(date);
         const messageDateFormatted = messageDate.toLocaleTimeString('en-US', {
@@ -21,13 +22,10 @@ export const MessageArea = ({ data }: DataProps) => {
         return messageDateFormatted;
     };
 
+    
+
     return (
         <View style={data.sender === user ? styles.container : styles.notMeContainer}>
-            {/* {data.sender !== user ? (
-                <View>
-                    <Text style={styles.notMeSender}>{data.sender}</Text>
-                </View>
-            ) : null} */}
             <View style={data.sender === user ? styles.box : styles.notMeBox}>
                 <Text style={data.sender === user ? styles.message : styles.notMeMessage}>
                     {data.content}
