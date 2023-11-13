@@ -5,7 +5,9 @@ const socket: Socket = io('https://api-tallkaway.koyeb.app/chat');
 
 export const getConversation = (token: string) => {
     const [conversation, setConversation] = useState<any[]>([]); //pour l'instant le type est en any mais c'est à changer
+
     const BASE_URL = TALK_AWAY_API_BASE_URL;
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -18,7 +20,7 @@ export const getConversation = (token: string) => {
 
                 if (response.ok) {
                     const json = await response.json();
-                    setConversation(json.data); // Mettre à jour l'état avec les données récupérées
+                    setConversation(json.data);
                 } else {
                     console.error('Error fetching conversation data:', response.status);
                 }
@@ -30,5 +32,5 @@ export const getConversation = (token: string) => {
         fetchData();
     }, [token, BASE_URL]);
 
-    return conversation; // Retourner les données pour utilisation dans le composant
+    return conversation;
 };
