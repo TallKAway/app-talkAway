@@ -1,24 +1,37 @@
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
+    Button,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    Button,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
+import { FormInput } from '../../../components/Input/FormInput';
+import { login } from '../../../core/api/login/login';
+import { setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
-import { useState } from 'react';
+import { UserCredentials } from '../../../domains/Credentials';
 
 export const LogIn = () => {
     const [email, setEmail] = useState<string>('');
-
     const [password, setPassword] = useState<string>('');
+
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
+    async function loginUser({ email, password }: UserCredentials) {
+        const tokens = await login(email, password);
+        if (tokens.success) {
+            setCredentials('accessToken', tokens.accessToken);
+            setCredentials('refreshToken', tokens.refreshToken);
+            navigation.navigate('HomePage');
+        }
+    }
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -34,7 +47,11 @@ export const LogIn = () => {
                         label={'Mot de passe'}
                         isPassword={true}
                     />
-                    <SubmitButton isDisabled={false} title={'Submit'}></SubmitButton>
+                    <SubmitButton
+                        isDisabled={false}
+                        title={'Submit'}
+                        authFunc={() => loginUser({ email, password })}
+                    ></SubmitButton>
                     <Button
                         title="Pas encore chez nous ?"
                         onPress={() => {

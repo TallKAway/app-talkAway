@@ -5,6 +5,7 @@ import { LogInScreen } from './src/pages/AuthenticatePage/LogInScreen';
 import { DiscussionPage } from './src/pages/DiscussionPage/DiscussionPage';
 import { HeaderName, HeaderButton } from './src/components/Header/Header';
 import { ContactScreen } from './src/pages/ContactPage/ContactScreen';
+import { TabNavigator } from './src/components/TabNavigator/TabNavigator';
 import {
     ScreenStackNavigatorParamList,
     ScreenStackBottomNavigatorParamList,
@@ -12,12 +13,13 @@ import {
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ContactPage } from './src/pages/ContactPage/ContactPage';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>();
 
 export default function App() {
-    const isSignUp = true;
+    const isSignUp = false;
 
     return (
         <NavigationContainer>
@@ -59,6 +61,7 @@ export default function App() {
                 >
                     <Stack.Screen name="SignUp" component={SignUpScreen} />
                     <Stack.Screen name="LogIn" component={LogInScreen} />
+                    <Stack.Screen name="HomePage" component={TabNavigator} />
                 </Stack.Navigator>
             )}
         </NavigationContainer>

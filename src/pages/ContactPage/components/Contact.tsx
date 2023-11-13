@@ -9,17 +9,25 @@ import {
     FlatList,
     Button,
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SearchInput } from '../../../components/Input/SearchInput';
 import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 import users from '../../../data/users.json';
+import { getCredentials } from '../../../core/utils/credentials';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
+    const [userToken, setUserToken] = useState<string | null>('');
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
+
+    const token = async () => {
+        const accessTokenItem = await SecureStore.getItemAsync('accessToken');
+        setUserToken(accessTokenItem);
+    };
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -34,6 +42,12 @@ export const Contact = () => {
                                 <Text>{item.username}</Text>
                             ) : null
                         }
+                    />
+                    <Button
+                        title="Get token"
+                        onPress={() => {
+                            getCredentials();
+                        }}
                     />
                     <Button
                         title={`discussion with ${friendName}`}

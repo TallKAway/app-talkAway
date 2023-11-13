@@ -1,22 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
+    Button,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    Button,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FormInput } from '../../../components/Input/FormInput';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
+import { FormInput } from '../../../components/Input/FormInput';
+import { authenticate } from '../../../core/api/authenticate';
+import { setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
+import { UserCredentials } from '../../../domains/Credentials';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
+    const [cellphone, setCellphone] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmedPassword, setConfirmedPassword] = useState<string>('');
     const [isFormValid, setIsFormValid] = useState<boolean | null>(false);
@@ -25,9 +29,19 @@ export const SignUp = () => {
     const emailRegex = new RegExp('^[\\w.-]+@[\\w-]+(\\.[\\w-]{2,4})+$');
     const usernameRegex = new RegExp('^[a-z]{3}[a-z0-9]{1,}$');
     const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{6,}$');
+    const cellphoneRegex = new RegExp('^0\\d{9}$');
 
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
+
+    async function signUpUser({ username, email, cellphone, password }: UserCredentials) {
+        const tokens = await authenticate(username, email, cellphone, password);
+        if (tokens.success) {
+            setCredentials('accessToken', tokens.accessToken);
+            setCredentials('refreshToken', tokens.refreshToken);
+            navigation.navigate('HomePage');
+        }
+    }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -35,24 +49,33 @@ export const SignUp = () => {
                 <View style={styles.formWrapper}>
                     <Text style={styles.title}>Créer un compte</Text>
                     <FormInput
-                        getContent={(data) => setEmail(data)}
                         label={'Email'}
+                        getContent={(data) => setEmail(data)}
                         isPassword={false}
                         validationRegex={emailRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
                         errorLabel={"Format de l'email invalide"}
                     />
                     <FormInput
-                        getContent={(data) => setUsername(data)}
                         label={'Pseudo'}
+                        getContent={(data) => setUsername(data)}
                         isPassword={false}
                         validationRegex={usernameRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
-                        errorLabel={'4 caractères minimum'}
+                        errorLabel={'4 caractères minimum, pas de majuscules'}
+                    />
+
+                    <FormInput
+                        label={'Téléphone'}
+                        getContent={(data) => setCellphone(data)}
+                        isPassword={false}
+                        validationRegex={cellphoneRegex}
+                        isValidInput={(isValid) => setIsFormValid(isValid)}
+                        errorLabel={'Numéro de téléphone invalide'}
                     />
                     <FormInput
-                        getContent={(data) => setPassword(data)}
                         label={'Mot de passe'}
+                        getContent={(data) => setPassword(data)}
                         isPassword={true}
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
@@ -61,13 +84,17 @@ export const SignUp = () => {
                         }
                     />
                     <FormInput
-                        getContent={(data) => setConfirmedPassword(data)}
                         label={'Confirmation de mot de passe'}
+                        getContent={(data) => setConfirmedPassword(data)}
                         isPassword={true}
                         validationRegex={passwordRegex}
                         isValidInput={(isValid) => setIsFormValid(isValid)}
                     />
-                    <SubmitButton isDisabled={!enableSubmitButton} title={'Submit'}></SubmitButton>
+                    <SubmitButton
+                        isDisabled={!enableSubmitButton}
+                        title={'Submit'}
+                        authFunc={() => signUpUser({ username, email, cellphone, password })}
+                    ></SubmitButton>
                     <Button
                         title="Compte déjà créé ?"
                         onPress={() => {
