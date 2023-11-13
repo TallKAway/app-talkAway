@@ -10,7 +10,7 @@ import {
     Button,
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SearchInput } from '../../../components/Input/SearchInput';
 import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
@@ -21,13 +21,17 @@ export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
-    const [userToken, setUserToken] = useState<string | null>('');
+    const [userToken, setUserToken] = useState<[] | null>([]);
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
 
-    const token = async () => {
-        const accessTokenItem = await SecureStore.getItemAsync('accessToken');
-        setUserToken(accessTokenItem);
-    };
+    async function getAccesToken() {
+        let result = await SecureStore.getItemAsync('accessToken');
+        if (result) {
+            alert("🔐 Here's your value 🔐 \n" + result);
+        } else {
+            alert('No values stored under that key.');
+        }
+    }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -46,9 +50,12 @@ export const Contact = () => {
                     <Button
                         title="Get token"
                         onPress={() => {
-                            getCredentials();
+                            getAccesToken();
                         }}
                     />
+
+                    <Text>salut : {userToken}</Text>
+
                     <Button
                         title={`discussion with ${friendName}`}
                         onPress={() => {

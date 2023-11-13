@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Button,
     Keyboard,
@@ -16,6 +16,7 @@ import { authenticate } from '../../../core/api/authenticate';
 import { setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 import { UserCredentials } from '../../../domains/Credentials';
+import { useUserContext } from '../../../context/CurrrentUserProvider';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
@@ -42,7 +43,6 @@ export const SignUp = () => {
             navigation.navigate('HomePage');
         }
     }
-
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -101,6 +101,8 @@ export const SignUp = () => {
                             navigation.navigate('LogIn');
                         }}
                     />
+
+                   
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

@@ -1,4 +1,3 @@
-import { LogInScreen } from '../../pages/AuthenticatePage/LogInScreen';
 import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
 import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
 import { HeaderName, HeaderButton } from '../../components/Header/Header';
