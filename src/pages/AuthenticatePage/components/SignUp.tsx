@@ -16,7 +16,7 @@ import { authenticate } from '../../../core/api/authenticate';
 import { getCredentials, setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 import { UserCredentials } from '../../../domains/Credentials';
-import { useUserContext } from '../../../context/CurrrentUserProvider';
+import { useUserContext } from '../../../context/CurrentUserProvider';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');

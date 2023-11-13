@@ -16,7 +16,7 @@ import { SearchInput } from '../../../components/Input/SearchInput';
 import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 import users from '../../../data/users.json';
 import { getCredentials } from '../../../core/utils/credentials';
-import { useUserContext } from '../../../context/CurrrentUserProvider';
+import { useUserContext } from '../../../context/CurrentUserProvider';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');

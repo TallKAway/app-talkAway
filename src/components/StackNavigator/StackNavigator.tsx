@@ -8,7 +8,7 @@ import {
     ScreenStackNavigatorParamList,
     ScreenStackBottomNavigatorParamList,
 } from '../../domains/Navigation';
-import { useUserContext } from '../../context/CurrrentUserProvider';
+import { useUserContext } from '../../context/CurrentUserProvider';
 import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
