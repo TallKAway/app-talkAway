@@ -16,6 +16,7 @@ import { SearchInput } from '../../../components/Input/SearchInput';
 import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 import users from '../../../data/users.json';
 import { getCredentials } from '../../../core/utils/credentials';
+import { useUserContext } from '../../../context/CurrrentUserProvider';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
@@ -23,15 +24,6 @@ export const Contact = () => {
     const [friendId, setFriendId] = useState<string>('');
     const [userToken, setUserToken] = useState<[] | null>([]);
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
-
-    async function getAccesToken() {
-        let result = await SecureStore.getItemAsync('accessToken');
-        if (result) {
-            alert("🔐 Here's your value 🔐 \n" + result);
-        } else {
-            alert('No values stored under that key.');
-        }
-    }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -47,14 +39,6 @@ export const Contact = () => {
                             ) : null
                         }
                     />
-                    <Button
-                        title="Get token"
-                        onPress={() => {
-                            getAccesToken();
-                        }}
-                    />
-
-                    <Text>salut : {userToken}</Text>
 
                     <Button
                         title={`discussion with ${friendName}`}

@@ -13,7 +13,7 @@ import {
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { FormInput } from '../../../components/Input/FormInput';
 import { authenticate } from '../../../core/api/authenticate';
-import { setCredentials } from '../../../core/utils/credentials';
+import { getCredentials, setCredentials } from '../../../core/utils/credentials';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 import { UserCredentials } from '../../../domains/Credentials';
 import { useUserContext } from '../../../context/CurrrentUserProvider';
@@ -43,6 +43,23 @@ export const SignUp = () => {
             navigation.navigate('HomePage');
         }
     }
+
+    const [refreshToken, setRefreshToken] = useState<string>();
+
+    const context = useUserContext();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (context.userRefreshToken) {
+                const resolvedToken = await context.userRefreshToken;
+                setRefreshToken(resolvedToken);
+            } else {
+                setRefreshToken('NO_CONTEXT_TOKEN');
+            }
+        };
+        fetchData();
+    }, [context.userRefreshToken]);
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -102,7 +119,9 @@ export const SignUp = () => {
                         }}
                     />
 
-                   
+                    <View>
+                        {!refreshToken ? <Text>NO TOKEN</Text> : <Text>{refreshToken}</Text>}
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

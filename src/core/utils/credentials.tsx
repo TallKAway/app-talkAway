@@ -17,7 +17,7 @@ export async function getCredentials() {
             checkTokenValidity(credentials);
         }
     } catch (error) {
-        throw new Error('Error getting credentials');
+        throw new Error('Error getting credentials' + ' : ' + error);
     }
 
     return null;

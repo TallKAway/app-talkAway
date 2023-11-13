@@ -19,13 +19,13 @@ export const StackNavigator = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (context.refreshToken) {
-                const resolvedToken = await context.refreshToken;
+            if (context.userRefreshToken) {
+                const resolvedToken = await context.userRefreshToken;
                 setRefreshToken(resolvedToken);
             }
         };
         fetchData();
-    }, [context.refreshToken]);
+    }, [context.userRefreshToken]);
     return (
         <Stack.Navigator
             screenOptions={{

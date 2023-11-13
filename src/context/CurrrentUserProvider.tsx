@@ -3,13 +3,13 @@ import * as SecureStore from 'expo-secure-store';
 import { getCredentials } from '../core/utils/credentials';
 
 interface UserContext {
-    accessToken: Promise<string> | null;
-    refreshToken: Promise<string> | null;
+    userAccessToken: string | null;
+    userRefreshToken: string | null;
 }
 
 const initialUserContext = {
-    accessToken: null,
-    refreshToken: null,
+    userAccessToken: null,
+    userRefreshToken: null,
 };
 
 export const UserContext = createContext<UserContext>(initialUserContext);
@@ -18,14 +18,20 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
     const [userCredentials, setUserCredentials] = useState<UserContext>(initialUserContext);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCredentials = async () => {
             const credentials = await getCredentials();
+
             if (credentials) {
                 const { accessToken, refreshToken } = credentials;
-                setUserCredentials({ accessToken: accessToken, refreshToken: refreshToken });
+                setUserCredentials({
+                    userAccessToken: accessToken,
+                    userRefreshToken: refreshToken,
+                });
             }
         };
-        fetchData();
+
+        fetchCredentials();
+        console.log(userCredentials);
     }, []);
 
     return <UserContext.Provider value={userCredentials}>{children}</UserContext.Provider>;
