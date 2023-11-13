@@ -14,6 +14,7 @@ export const getConversation = (token: string) => {
                 const response = await fetch(`${BASE_URL}/chat/conversation/`, {
                     method: 'GET',
                     headers: {
+                        Authorization: `Baerer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });
