@@ -1,7 +1,7 @@
 import { TALK_AWAY_API_BASE_URL } from '@env';
 import { AuthenticationResponse, UserCredentials } from '../../../domains/Credentials';
 
-export const login = (
+export const login =  (
     email: UserCredentials['email'],
     password: UserCredentials['password']
 ): Promise<AuthenticationResponse> => {

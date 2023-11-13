@@ -15,12 +15,15 @@ import { SearchInput } from '../../../components/Input/SearchInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
 import users from '../../../data/users.json';
 import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
+import { getConversation } from '../../../core/api/conversation';
+import { access } from 'fs';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
     const [userToken, setUserToken] = useState<[] | null>([]);
+    const [refreshToken, setRefreshToken] = useState<string>();
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
 
     const { isAuthenticated } = useUserContext();

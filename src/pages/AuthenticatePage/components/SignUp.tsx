@@ -10,6 +10,7 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { FormInput } from '../../../components/Input/FormInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
