@@ -15,12 +15,11 @@ export async function getCredentials() {
         if (accessToken !== null && refreshToken !== null) {
             const credentials: CredentialsToken = { accessToken, refreshToken };
             checkTokenValidity(credentials);
+            return credentials;
         }
     } catch (error) {
         throw new Error('Error getting credentials' + ' : ' + error);
     }
-
-    return null;
 }
 
 async function getAccessTokenUsingRefresh(refreshToken: CredentialsToken['refreshToken']) {
@@ -56,7 +55,7 @@ function isTokenExpired(token: string) {
     }
 }
 
-async function checkTokenValidity(credentials: CredentialsToken) {
+export async function checkTokenValidity(credentials: CredentialsToken) {
     if (!isTokenExpired(credentials.accessToken)) {
         return credentials;
     }
@@ -68,6 +67,6 @@ async function checkTokenValidity(credentials: CredentialsToken) {
 
         return response;
     }
-
+    console.log('access not available please login');
     return null;
 }

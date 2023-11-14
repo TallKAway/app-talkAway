@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
     Button,
     Keyboard,
@@ -12,11 +12,8 @@ import {
 } from 'react-native';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { FormInput } from '../../../components/Input/FormInput';
-import { authenticate } from '../../../core/api/authenticate';
-import { getCredentials, setCredentials } from '../../../core/utils/credentials';
-import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
-import { UserCredentials } from '../../../domains/Credentials';
 import { useUserContext } from '../../../context/CurrentUserProvider';
+import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const SignUp = () => {
     const [email, setEmail] = useState<string>('');
@@ -35,30 +32,7 @@ export const SignUp = () => {
     const isPasswordConfirmed = password === confirmedPassword;
     const enableSubmitButton = isPasswordConfirmed && email.length > 0 && username.length > 0;
 
-    async function signUpUser({ username, email, cellphone, password }: UserCredentials) {
-        const tokens = await authenticate(username, email, cellphone, password);
-        if (tokens.success) {
-            setCredentials('accessToken', tokens.accessToken);
-            setCredentials('refreshToken', tokens.refreshToken);
-            navigation.navigate('HomePage');
-        }
-    }
-
-    const [refreshToken, setRefreshToken] = useState<string>();
-
-    const context = useUserContext();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (context.userRefreshToken) {
-                const resolvedToken = await context.userRefreshToken;
-                setRefreshToken(resolvedToken);
-            } else {
-                setRefreshToken('NO_CONTEXT_TOKEN');
-            }
-        };
-        fetchData();
-    }, [context.userRefreshToken]);
+    const { signUpUser } = useUserContext();
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -118,10 +92,6 @@ export const SignUp = () => {
                             navigation.navigate('LogIn');
                         }}
                     />
-
-                    <View>
-                        {!refreshToken ? <Text>NO TOKEN</Text> : <Text>{refreshToken}</Text>}
-                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

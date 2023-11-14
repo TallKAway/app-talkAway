@@ -12,25 +12,16 @@ import {
 } from 'react-native';
 import { SubmitButton } from '../../../components/Button/SubmitButton';
 import { FormInput } from '../../../components/Input/FormInput';
-import { login } from '../../../core/api/login/login';
-import { setCredentials } from '../../../core/utils/credentials';
+import { useUserContext } from '../../../context/CurrentUserProvider';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
-import { UserCredentials } from '../../../domains/Credentials';
 
 export const LogIn = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const navigation = useNavigation<ScreenStackNavigatorProps>();
+    const { loginUser } = useUserContext();
 
-    async function loginUser({ email, password }: UserCredentials) {
-        const tokens = await login(email, password);
-        if (tokens.success) {
-            setCredentials('accessToken', tokens.accessToken);
-            setCredentials('refreshToken', tokens.refreshToken);
-            navigation.navigate('HomePage');
-        }
-    }
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

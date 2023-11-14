@@ -1,22 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
+    Button,
+    FlatList,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
-    FlatList,
-    Button,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
-import { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { SearchInput } from '../../../components/Input/SearchInput';
-import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
-import users from '../../../data/users.json';
-import { getCredentials } from '../../../core/utils/credentials';
 import { useUserContext } from '../../../context/CurrentUserProvider';
+import users from '../../../data/users.json';
+import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
@@ -24,6 +22,8 @@ export const Contact = () => {
     const [friendId, setFriendId] = useState<string>('');
     const [userToken, setUserToken] = useState<[] | null>([]);
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
+
+    const { isAuthenticated } = useUserContext();
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -49,6 +49,8 @@ export const Contact = () => {
                             });
                         }}
                     ></Button>
+                    {/* A supprimer le dessous c'est pour vérifier si on est bien logged in et que les data sont bien stockées */}
+                    <Text>{isAuthenticated ? `Hello user!` : 'Not logged in'}</Text>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
