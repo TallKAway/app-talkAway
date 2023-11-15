@@ -60,24 +60,6 @@ export const Contact = () => {
                             });
                         }}
                     />
-
-                    {userConversation.length !== 0 ? (
-                        userConversation.map((conversation) => {
-                            <Button
-                                title={`discussion with ${friendName}`}
-                                onPress={() => {
-                                    navigation.navigate('Discussion', {
-                                        userName: friendName,
-                                        id: friendId,
-                                    });
-                                }}
-                            />;
-                        })
-                    ) : (
-                        <View>
-                            <Text>No Conversation</Text>
-                        </View>
-                    )}
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
