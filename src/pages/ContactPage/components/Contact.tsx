@@ -15,7 +15,7 @@ import { SearchInput } from '../../../components/Input/SearchInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
 import { getConversation } from '../../../core/api/conversation';
 import users from '../../../data/users.json';
-import { logout } from '../../../core/api/logout/logout';
+import { useLogout } from '../../../core/api/logout/logout';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
@@ -24,6 +24,8 @@ export const Contact = () => {
     const [friendId, setFriendId] = useState<string>('');
 
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
+    const logout = useLogout();
 
     const { isAuthenticated, authTokens } = useUserContext();
 
@@ -34,12 +36,12 @@ export const Contact = () => {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.contactWrapper}>
-                    {/* <Button
+                    <Button
                         title="Log Out"
                         onPress={() => {
                             logout();
                         }}
-                    /> */}
+                    />
                     <SearchInput getContent={(data) => setResearch(data)}></SearchInput>
                     <FlatList
                         data={users}
