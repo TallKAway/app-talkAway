@@ -26,11 +26,13 @@ export const Contact = () => {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const { isAuthenticated, authTokens, logoutUser } = useUserContext();
+    console.log('🚀 ~ file: Contact.tsx:29 ~ Contact ~ authTokens:', authTokens);
     const conversation = getConversation(authTokens?.accessToken);
-
     useEffect(() => {
         setUserConversation(conversation);
-    }, [conversation]);
+    }, []);
+
+    console.log(userConversation);
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -60,6 +62,25 @@ export const Contact = () => {
                             });
                         }}
                     />
+
+                    {conversation.lenght !== 0 ? (
+                        conversation.map((conversation: any) => {
+                            <Button
+                                title={`discussion with ${friendName}`}
+                                onPress={() => {
+                                    navigation.navigate('Discussion', {
+                                        userName: friendName,
+                                        id: friendId,
+                                    });
+                                }}
+                            />;
+                        })
+                    ) : (
+                        <View>
+                            <Text>Pas encore de contact ?</Text>
+                            <Button title={'Ajouter un ami !'} />
+                        </View>
+                    )}
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
