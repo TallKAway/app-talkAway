@@ -3,8 +3,8 @@ import { TALK_AWAY_API_BASE_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
 const socket: Socket = io('https://api-tallkaway.koyeb.app/chat');
 
-export const getConversation = (token: string) => {
-    const [conversation, setConversation] = useState<any[]>([]); //pour l'instant le type est en any mais c'est à changer
+export const getConversation = (token: string | undefined) => {
+    const [conversation, setConversation] = useState<any>([]); //pour l'instant le type est en any mais c'est à changer
 
     const BASE_URL = TALK_AWAY_API_BASE_URL;
 
@@ -31,7 +31,7 @@ export const getConversation = (token: string) => {
         };
 
         fetchData();
-    }, [token, BASE_URL]);
+    }, []);
 
     return conversation;
 };

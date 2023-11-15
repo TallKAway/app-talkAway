@@ -14,24 +14,14 @@ import { useEffect, useState } from 'react';
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 
 export const StackNavigator = () => {
-    const [refreshToken, setRefreshToken] = useState<string | null>(null);
-    const context = useUserContext();
+    const { isAuthenticated } = useUserContext();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (context.userRefreshToken) {
-                const resolvedToken = await context.userRefreshToken;
-                setRefreshToken(resolvedToken);
-            }
-        };
-        fetchData();
-    }, [context.userRefreshToken]);
     return (
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName="SignUp"
+            initialRouteName={isAuthenticated ? 'SignUp' : 'HomePage'}
         >
             <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="LogIn" component={LogInScreen} />

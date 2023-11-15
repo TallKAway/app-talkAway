@@ -33,6 +33,7 @@ export function TabNavigator() {
                         <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
                     ),
                     tabBarStyle: { display: 'none' },
+                    tabBarVisible: false,
                 })}
             />
             <TabStack.Screen name="Contact" component={ContactScreen} />

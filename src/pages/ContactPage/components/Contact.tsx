@@ -22,11 +22,13 @@ export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
-    const [userToken, setUserToken] = useState<[] | null>([]);
-    const [refreshToken, setRefreshToken] = useState<string>();
+
     const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
 
-    const { isAuthenticated } = useUserContext();
+    const { isAuthenticated, authTokens } = useUserContext();
+
+    const { conversation } = getConversation(authTokens?.accessToken);
+    console.log('🚀 ~ file: Contact.tsx:31 ~ Contact ~ conversation:', conversation);
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -52,8 +54,6 @@ export const Contact = () => {
                             });
                         }}
                     ></Button>
-                    {/* A supprimer le dessous c'est pour vérifier si on est bien logged in et que les data sont bien stockées */}
-                    <Text>{isAuthenticated ? `Hello user!` : 'Not logged in'}</Text>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
