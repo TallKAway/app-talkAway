@@ -1,7 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import { PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
+import {
+    PropsWithChildren,
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    useCallback,
+} from 'react';
 import { login } from '../core/api/login/login';
-import { getCredentials, setCredentials } from '../core/utils/credentials';
+import { deleteCredentials, getCredentials, setCredentials } from '../core/utils/credentials';
 import { CredentialsToken, UserCredentials } from '../domains/Credentials';
 import { ScreenStackNavigatorProps } from '../domains/Navigation';
 import { authenticate } from '../core/api/authenticate';
@@ -11,6 +18,7 @@ interface AuthContextProps {
     authTokens: CredentialsToken | undefined;
     loginUser: ({ email, password }: UserCredentials) => Promise<void>;
     signUpUser: ({ username, email, cellphone, password }: UserCredentials) => Promise<void>;
+    logoutUser: () => Promise<void>;
 }
 
 export const UserContext = createContext<AuthContextProps | undefined>(undefined);
@@ -32,6 +40,16 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
 
         loadUser();
     }, []);
+
+    async function logoutUser() {
+        try {
+            deleteCredentials('accessToken');
+            deleteCredentials('refreshToken');
+            navigation.navigate('SignUp');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    }
 
     async function loginUser({ email, password }: UserCredentials) {
         const tokens = await login(email, password);
@@ -56,6 +74,7 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
         authTokens,
         loginUser,
         signUpUser,
+        logoutUser,
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

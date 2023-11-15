@@ -3,6 +3,10 @@ import * as SecureStore from 'expo-secure-store';
 import { isExpired } from 'react-jwt';
 import { CredentialsToken } from '../../domains/Credentials';
 
+export async function deleteCredentials(key: string) {
+    await SecureStore.deleteItemAsync(key);
+}
+
 export async function setCredentials(key: string, value: string) {
     await SecureStore.setItemAsync(key, value);
 }

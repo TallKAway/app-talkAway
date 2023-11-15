@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Button,
     FlatList,
@@ -15,22 +15,22 @@ import { SearchInput } from '../../../components/Input/SearchInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
 import { getConversation } from '../../../core/api/conversation';
 import users from '../../../data/users.json';
-import { useLogout } from '../../../core/api/logout/logout';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
+    const [userConversation, setUserConversation] = useState([]);
 
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
-    const logout = useLogout();
+    const { isAuthenticated, authTokens, logoutUser } = useUserContext();
+    const conversation = getConversation(authTokens?.accessToken);
 
-    const { isAuthenticated, authTokens } = useUserContext();
-
-    const { conversation } = getConversation(authTokens?.accessToken);
-    // console.log('🚀 ~ file: Contact.tsx:31 ~ Contact ~ conversation:', conversation);
+    useEffect(() => {
+        setUserConversation(conversation);
+    }, [conversation]);
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -39,7 +39,7 @@ export const Contact = () => {
                     <Button
                         title="Log Out"
                         onPress={() => {
-                            logout();
+                            logoutUser();
                         }}
                     />
                     <SearchInput getContent={(data) => setResearch(data)}></SearchInput>
@@ -51,7 +51,6 @@ export const Contact = () => {
                             ) : null
                         }
                     />
-
                     <Button
                         title={`discussion with ${friendName}`}
                         onPress={() => {
@@ -60,13 +59,25 @@ export const Contact = () => {
                                 id: friendId,
                             });
                         }}
-                    ></Button>
+                    />
 
-                    <Text>
-                        {isAuthenticated
-                            ? `salut : ${authTokens?.accessToken} &&&&&& : ${isAuthenticated}`
-                            : `null ${isAuthenticated}`}
-                    </Text>
+                    {userConversation.length !== 0 ? (
+                        userConversation.map((conversation) => {
+                            <Button
+                                title={`discussion with ${friendName}`}
+                                onPress={() => {
+                                    navigation.navigate('Discussion', {
+                                        userName: friendName,
+                                        id: friendId,
+                                    });
+                                }}
+                            />;
+                        })
+                    ) : (
+                        <View>
+                            <Text>No Conversation</Text>
+                        </View>
+                    )}
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

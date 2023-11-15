@@ -18,7 +18,7 @@ export const StackNavigator = () => {
             screenOptions={{
                 headerShown: true,
             }}
-            initialRouteName={isAuthenticated ? 'SignUp' : 'HomePage'}
+            initialRouteName={isAuthenticated ? 'HomePage' : 'SignUp'}
         >
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />

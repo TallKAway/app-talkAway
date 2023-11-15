@@ -11,6 +11,10 @@ export const getConversation = (token: string | undefined) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if (!token) {
+                    console.error('Token is not defined. Unable to fetch conversation data.');
+                    return;
+                }
                 const response = await fetch(`${BASE_URL}/chat/conversations/`, {
                     method: 'GET',
                     headers: {
@@ -31,7 +35,7 @@ export const getConversation = (token: string | undefined) => {
         };
 
         fetchData();
-    }, []);
+    }, [token]);
 
     return conversation;
 };
