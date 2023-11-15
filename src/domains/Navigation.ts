@@ -4,10 +4,11 @@ export type ScreenStackNavigatorParamList = {
     SignUp: undefined;
     LogIn: undefined;
     HomePage: undefined;
+    Discussion: { userName: string; id: string };
 };
 export type ScreenStackBottomNavigatorParamList = {
-    Discussion: { userName: string; id: string };
     Contact: undefined;
+    Settings: undefined;
 };
 
 export type ScreenStackNavigatorProps = NativeStackNavigationProp<ScreenStackNavigatorParamList>;

@@ -11,7 +11,7 @@ export const getConversation = (token: string | undefined) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/chat/conversation/`, {
+                const response = await fetch(`${BASE_URL}/chat/conversations/`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Baerer ${token}`,

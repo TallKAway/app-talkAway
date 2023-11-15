@@ -1,41 +1,21 @@
-import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
-import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
-import { HeaderName, HeaderButton } from '../../components/Header/Header';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
-    ScreenStackNavigatorParamList,
     ScreenStackBottomNavigatorParamList,
+    ScreenStackBottomNavigatorProps
 } from '../../domains/Navigation';
+import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
 
 const TabStack = createBottomTabNavigator<ScreenStackBottomNavigatorParamList>();
 
 export function TabNavigator() {
     return (
         <TabStack.Navigator
-            screenOptions={{
-                headerShown: true,
-            }}
+            screenOptions={({ route }) => ({
+                headerShown: false,
+            })}
             initialRouteName="Contact"
         >
-            <TabStack.Screen
-                name="Discussion"
-                component={DiscussionPage}
-                initialParams={{ userName: '' }}
-                options={({ route }) => ({
-                    headerTitle: () =>
-                        route.params.userName ? (
-                            <HeaderName>{route.params.userName + ' ' + route.params.id}</HeaderName>
-                        ) : (
-                            <Text>Default Title</Text>
-                        ),
-                    headerLeft: () => (
-                        <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
-                    ),
-                    tabBarStyle: { display: 'none' },
-                    tabBarVisible: false,
-                })}
-            />
             <TabStack.Screen name="Contact" component={ContactScreen} />
         </TabStack.Navigator>
     );

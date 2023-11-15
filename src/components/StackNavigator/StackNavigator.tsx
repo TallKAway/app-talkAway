@@ -1,15 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { SignUpScreen } from '../../pages/AuthenticatePage/SignUpScreen';
-import { LogInScreen } from '../../pages/AuthenticatePage/LogInScreen';
+import { Text } from 'react-native';
+import { HeaderButton, HeaderName } from '../../components/Header/Header';
 import { TabNavigator } from '../../components/TabNavigator/TabNavigator';
-import {
-    ScreenStackNavigatorParamList,
-    ScreenStackBottomNavigatorParamList,
-} from '../../domains/Navigation';
 import { useUserContext } from '../../context/CurrentUserProvider';
-import { useEffect, useState } from 'react';
+import { ScreenStackNavigatorParamList } from '../../domains/Navigation';
+import { LogInScreen } from '../../pages/AuthenticatePage/LogInScreen';
+import { SignUpScreen } from '../../pages/AuthenticatePage/SignUpScreen';
+import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 
@@ -19,13 +16,29 @@ export const StackNavigator = () => {
     return (
         <Stack.Navigator
             screenOptions={{
-                headerShown: false,
+                headerShown: true,
             }}
-            initialRouteName={isAuthenticated ? 'SignUp' : 'HomePage'}
+            initialRouteName={!isAuthenticated ? 'SignUp' : 'HomePage'}
         >
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="LogIn" component={LogInScreen} />
-            <Stack.Screen name="HomePage" component={TabNavigator} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="HomePage" component={TabNavigator} options={{ title: 'Chats' }} />
+            <Stack.Screen
+                name="Discussion"
+                component={DiscussionPage}
+                initialParams={{ userName: '' }}
+                options={({ route }) => ({
+                    headerTitle: () =>
+                        route.params.userName ? (
+                            <HeaderName>{route.params.userName + ' ' + route.params.id}</HeaderName>
+                        ) : (
+                            <Text>Default Title</Text>
+                        ),
+                    headerLeft: () => (
+                        <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
+                    ),
+                })}
+            />
         </Stack.Navigator>
     );
 };

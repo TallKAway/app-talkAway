@@ -13,28 +13,33 @@ import {
 } from 'react-native';
 import { SearchInput } from '../../../components/Input/SearchInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
-import users from '../../../data/users.json';
-import { ScreenStackBottomNavigatorProps } from '../../../domains/Navigation';
 import { getConversation } from '../../../core/api/conversation';
-import { access } from 'fs';
+import users from '../../../data/users.json';
+import { logout } from '../../../core/api/logout/logout';
+import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
     const [research, setResearch] = useState<string>('');
     const [friendName, setFriendName] = useState<string>('Billy');
     const [friendId, setFriendId] = useState<string>('');
 
-    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const { isAuthenticated, authTokens } = useUserContext();
 
     const { conversation } = getConversation(authTokens?.accessToken);
-    console.log('🚀 ~ file: Contact.tsx:31 ~ Contact ~ conversation:', conversation);
+    // console.log('🚀 ~ file: Contact.tsx:31 ~ Contact ~ conversation:', conversation);
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.contactWrapper}>
-                    <Text style={styles.title}>Contacts</Text>
+                    {/* <Button
+                        title="Log Out"
+                        onPress={() => {
+                            logout();
+                        }}
+                    /> */}
                     <SearchInput getContent={(data) => setResearch(data)}></SearchInput>
                     <FlatList
                         data={users}
@@ -54,6 +59,12 @@ export const Contact = () => {
                             });
                         }}
                     ></Button>
+
+                    <Text>
+                        {isAuthenticated
+                            ? `salut : ${authTokens?.accessToken} &&&&&& : ${isAuthenticated}`
+                            : `null ${isAuthenticated}`}
+                    </Text>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
