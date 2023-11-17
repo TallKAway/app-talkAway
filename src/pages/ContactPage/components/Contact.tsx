@@ -63,7 +63,7 @@ export const Contact = () => {
                         }}
                     />
 
-                    {conversation.lenght !== 0 ? (
+                    {conversation.length !== 0 ? (
                         conversation.map((conversation: any) => {
                             <Button
                                 title={`discussion with ${friendName}`}
