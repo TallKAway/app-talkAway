@@ -26,11 +26,11 @@ export const StackNavigator = () => {
             <Stack.Screen
                 name="Discussion"
                 component={DiscussionPage}
-                initialParams={{ userName: '' }}
+                initialParams={{ username: '' }}
                 options={({ route }) => ({
                     headerTitle: () =>
-                        route.params.userName ? (
-                            <HeaderName>{route.params.userName + ' ' + route.params.id}</HeaderName>
+                        route.params.username ? (
+                            <HeaderName>{route.params.username + ' ' + route.params.id}</HeaderName>
                         ) : (
                             <Text>Default Title</Text>
                         ),

@@ -10,7 +10,7 @@ export const getMessages = (token: string, friendId: string) => {
             await fetch(`https://api-tallkaway.koyeb.app/chat/conversation/${friendId}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Baerer ${token}`,
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             })

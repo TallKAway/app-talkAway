@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
     Button,
-    FlatList,
     Keyboard,
     KeyboardAvoidingView,
     Platform,
@@ -11,27 +10,43 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
-import { SearchInput } from '../../../components/Input/SearchInput';
+import { FormInput } from '../../../components/Input/FormInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
+import { contact } from '../../../core/api/contact';
 import { getConversation } from '../../../core/api/conversation';
-import users from '../../../data/users.json';
+import { User } from '../../../domains/Contact';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
-    const [research, setResearch] = useState<string>('');
-    const [friendName, setFriendName] = useState<string>('Billy');
+    const { isAuthenticated, authTokens, logoutUser } = useUserContext();
+    const accessToken = authTokens?.accessToken;
+
+    const [searchFriend, setSearchFriend] = useState<string>('');
+    const [friendData, setFriendData] = useState<User>();
+    console.log('🚀 ~ file: Contact.tsx:26 ~ Contact ~ friendData:', friendData);
+
+    const [friendName, setFriendName] = useState<string>();
     const [friendId, setFriendId] = useState<string>('');
     const [userConversation, setUserConversation] = useState([]);
 
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
-    const { isAuthenticated, authTokens, logoutUser } = useUserContext();
-    const conversation = getConversation(authTokens?.accessToken);
+    const conversation = getConversation(accessToken);
     useEffect(() => {
         setUserConversation(conversation);
     }, []);
 
-    console.log(userConversation);
+    const getFriendData = async () => {
+        if (accessToken) {
+            const allUsers = await contact(accessToken);
+
+            if (allUsers.success) {
+                const searchedFriend = allUsers.data.find((user) => user.username === searchFriend);
+                setFriendData(searchedFriend);
+                setFriendName(searchedFriend?.username);
+            }
+        }
+    };
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -43,20 +58,11 @@ export const Contact = () => {
                             logoutUser();
                         }}
                     />
-                    <SearchInput getContent={(data) => setResearch(data)}></SearchInput>
-                    <FlatList
-                        data={users}
-                        renderItem={({ item }) =>
-                            research.length > 0 && item.username.includes(research) ? (
-                                <Text>{item.username}</Text>
-                            ) : null
-                        }
-                    />
                     <Button
                         title={`discussion with ${friendName}`}
                         onPress={() => {
                             navigation.navigate('Discussion', {
-                                userName: friendName,
+                                username: friendName,
                                 id: friendId,
                             });
                         }}
@@ -68,7 +74,7 @@ export const Contact = () => {
                                 title={`discussion with ${friendName}`}
                                 onPress={() => {
                                     navigation.navigate('Discussion', {
-                                        userName: friendName,
+                                        username: friendName,
                                         id: friendId,
                                     });
                                 }}
@@ -77,7 +83,21 @@ export const Contact = () => {
                     ) : (
                         <View>
                             <Text>Pas encore de contact ?</Text>
-                            <Button title={'Ajouter un ami !'} />
+                            <FormInput
+                                getContent={(data) => setSearchFriend(data)}
+                                label={'Trouve tes ami.e.s !'}
+                                isPassword={false}
+                            />
+                            <Button title={'Rechercher'} onPress={() => getFriendData()} />
+                            {friendName && (
+                                <>
+                                    <Text>Souhaitez-vous ajouter {friendName} ?</Text>
+                                    <Button
+                                        title={"Confirmer l'ajout"}
+                                        onPress={() => 'Mettre la fonction to add a friend here'}
+                                    />
+                                </>
+                            )}
                         </View>
                     )}
                 </View>

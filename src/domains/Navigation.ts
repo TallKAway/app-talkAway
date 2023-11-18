@@ -4,7 +4,7 @@ export type ScreenStackNavigatorParamList = {
     SignUp: undefined;
     LogIn: undefined;
     HomePage: undefined;
-    Discussion: { userName: string; id: string };
+    Discussion: { username: string | undefined; id: string };
 };
 export type ScreenStackBottomNavigatorParamList = {
     Contact: undefined;
