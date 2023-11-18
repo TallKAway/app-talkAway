@@ -26,7 +26,6 @@ export const Contact = () => {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const { isAuthenticated, authTokens, logoutUser } = useUserContext();
-    console.log('🚀 ~ file: Contact.tsx:29 ~ Contact ~ authTokens:', authTokens);
     const conversation = getConversation(authTokens?.accessToken);
     useEffect(() => {
         setUserConversation(conversation);
