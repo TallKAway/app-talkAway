@@ -12,38 +12,50 @@ import {
 } from 'react-native';
 import { FormInput } from '../../../components/Input/FormInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
-import { contact } from '../../../core/api/contact';
+import { contact, addContact } from '../../../core/api/contact';
 import { getConversation } from '../../../core/api/conversation';
 import { User } from '../../../domains/Contact';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
-    const { isAuthenticated, authTokens, logoutUser } = useUserContext();
+    const { isAuthenticated, authTokens, logoutUser, user, updateUser } = useUserContext();
+    console.log(user?.id);
     const accessToken = authTokens?.accessToken;
 
     const [searchFriend, setSearchFriend] = useState<string>('');
     const [friendData, setFriendData] = useState<User>();
-    console.log('🚀 ~ file: Contact.tsx:26 ~ Contact ~ friendData:', friendData);
 
     const [friendName, setFriendName] = useState<string>();
-    const [friendId, setFriendId] = useState<string>('');
-    const [userConversation, setUserConversation] = useState([]);
+    const [friendId, setFriendId] = useState<string>();
+    const [friendList, setFriendList] = useState<Array<any>>();
 
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
-    const conversation = getConversation(accessToken);
     useEffect(() => {
-        setUserConversation(conversation);
-    }, []);
+        setFriendList(user?.friends);
+    }, [user]);
 
     const getFriendData = async () => {
-        if (accessToken) {
+                if (accessToken) {
             const allUsers = await contact(accessToken);
 
             if (allUsers.success) {
                 const searchedFriend = allUsers.data.find((user) => user.username === searchFriend);
                 setFriendData(searchedFriend);
                 setFriendName(searchedFriend?.username);
+                setFriendId(searchedFriend?.id);
+            }
+        }
+    };
+
+    const addFriend = async () => {
+        console.log("accessToken", accessToken);
+        console.log("friendId", friendId);
+        if (accessToken && friendId) {
+            const addFriend = await addContact(accessToken, friendId);
+            if (addFriend.success) {
+                console.log(addFriend.message);
+                updateUser();
             }
         }
     };
@@ -58,48 +70,39 @@ export const Contact = () => {
                             logoutUser();
                         }}
                     />
-                    <Button
-                        title={`discussion with ${friendName}`}
-                        onPress={() => {
-                            navigation.navigate('Discussion', {
-                                username: friendName,
-                                id: friendId,
-                            });
-                        }}
-                    />
-
-                    {conversation.length !== 0 ? (
-                        conversation.map((conversation: any) => {
+                    <View>
+                        <Text>Pas encore de contact ?</Text>
+                        <FormInput
+                            getContent={(data) => setSearchFriend(data)}
+                            label={'Trouve tes ami.e.s !'}
+                            isPassword={false}
+                        />
+                        <Button title={'Rechercher'} onPress={() => getFriendData()} />
+                        {friendName && (
+                            <>
+                                <Text>Souhaitez-vous ajouter {friendName} ?</Text>
+                                <Button
+                                    title={"Confirmer l'ajout"}
+                                    onPress={() => addFriend()}
+                                />
+                            </>
+                        )}
+                    </View>
+                    <View>
+                        <Text>Contact</Text>
+                        {friendList?.map((friend: any) => (
                             <Button
-                                title={`discussion with ${friendName}`}
+                                title={`discussion with ${friend.username}`}
                                 onPress={() => {
                                     navigation.navigate('Discussion', {
-                                        username: friendName,
-                                        id: friendId,
+                                        username: friend.username,
+                                        id: friend.id,
                                     });
                                 }}
-                            />;
-                        })
-                    ) : (
-                        <View>
-                            <Text>Pas encore de contact ?</Text>
-                            <FormInput
-                                getContent={(data) => setSearchFriend(data)}
-                                label={'Trouve tes ami.e.s !'}
-                                isPassword={false}
+                                key={friend.id}
                             />
-                            <Button title={'Rechercher'} onPress={() => getFriendData()} />
-                            {friendName && (
-                                <>
-                                    <Text>Souhaitez-vous ajouter {friendName} ?</Text>
-                                    <Button
-                                        title={"Confirmer l'ajout"}
-                                        onPress={() => 'Mettre la fonction to add a friend here'}
-                                    />
-                                </>
-                            )}
-                        </View>
-                    )}
+                        ))}
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

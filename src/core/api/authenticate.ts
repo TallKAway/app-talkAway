@@ -8,7 +8,7 @@ export const authenticate = (
     password: UserCredentials['password']
 ): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_BASE_URL;
-
+    
     return fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
@@ -35,13 +35,14 @@ export const authenticate = (
                     success: true,
                     accessToken: json.accessToken,
                     refreshToken: json.refreshToken,
+                    user: json.user,
                 };
             });
         })
         .catch((e) => {
             return {
                 success: false,
-                error: e.error.message || 'An error occurred during signup.',
+                error: e.error || 'An error occurred during signup.',
             };
         });
 };

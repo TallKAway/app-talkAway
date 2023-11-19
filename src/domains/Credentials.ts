@@ -15,8 +15,23 @@ export interface BadCredentialsResponse {
     error: 'BAD_CREDENTIALS';
 }
 
+export interface User {
+    id: string;
+    username: string;
+    email: string;
+    cellphone: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: null;
+    friendIds: Array<string>;
+    inverseFriendIds: Array<string>;
+    friends: Array<User>;
+    password: string;
+}
+
 export interface SuccessfulResponse extends CredentialsToken {
     success: true;
+    user: User;
 }
 
 export interface ErrorResponse {

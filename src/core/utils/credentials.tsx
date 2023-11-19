@@ -74,3 +74,27 @@ export async function checkTokenValidity(credentials: CredentialsToken) {
     console.log('access not available please login');
     return null;
 }
+
+export async function getUser(userId: string) {
+
+    const BASE_URL = TALK_AWAY_API_BASE_URL;
+
+    const accessToken = await SecureStore.getItemAsync('accessToken');
+
+    const response = await fetch(`${BASE_URL}/user/user/current/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+        },
+    });
+
+    return response.json().then((json) => {
+        return {
+            success: true,
+            message: json.message,
+            data: json.data,
+        };
+    });
+}

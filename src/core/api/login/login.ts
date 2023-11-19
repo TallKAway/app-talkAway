@@ -6,7 +6,7 @@ export const login =  (
     password: UserCredentials['password']
 ): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_BASE_URL;
-
+    
     return fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -37,13 +37,14 @@ export const login =  (
                     success: true,
                     accessToken: json.accessToken,
                     refreshToken: json.refreshToken,
+                    user: json.user,
                 };
             });
         })
         .catch((e) => {
             return {
                 success: false,
-                error: e.error.message || 'An error occurred during login.',
+                error: e.error || 'An error occurred during login.',
             };
         });
 };
