@@ -13,13 +13,11 @@ import {
 import { FormInput } from '../../../components/Input/FormInput';
 import { useUserContext } from '../../../context/CurrentUserProvider';
 import { contact, addContact } from '../../../core/api/contact';
-import { getConversation } from '../../../core/api/conversation';
 import { User } from '../../../domains/Contact';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export const Contact = () => {
-    const { isAuthenticated, authTokens, logoutUser, user, updateUser } = useUserContext();
-    console.log(user?.id);
+    const { authTokens, logoutUser, user, updateUser } = useUserContext();
     const accessToken = authTokens?.accessToken;
 
     const [searchFriend, setSearchFriend] = useState<string>('');
@@ -49,12 +47,9 @@ export const Contact = () => {
     };
 
     const addFriend = async () => {
-        console.log("accessToken", accessToken);
-        console.log("friendId", friendId);
         if (accessToken && friendId) {
             const addFriend = await addContact(accessToken, friendId);
             if (addFriend.success) {
-                console.log(addFriend.message);
                 updateUser();
             }
         }

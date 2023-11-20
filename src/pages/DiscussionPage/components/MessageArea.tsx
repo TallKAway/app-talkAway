@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
-
 interface DataProps {
     data: {
-        id: number;
-        sender: string;
+        id: string;
         content: string;
-        timestamp: number;
+        createdAt: string;
+        senderId: string;
+        direcConversationId: string;
+        isMine: boolean;
     };
 }
 
 export const MessageArea = ({ data }: DataProps) => {
-    const user = 'me';
-    const handleTimeStampToDate = (date: number) => {
+    const handleTimeStampToDate = (date: string) => {
         const messageDate = new Date(date);
         const messageDateFormatted = messageDate.toLocaleTimeString('en-US', {
             hour: 'numeric',
@@ -22,67 +21,44 @@ export const MessageArea = ({ data }: DataProps) => {
         return messageDateFormatted;
     };
 
-    
-
     return (
-        <View style={data.sender === user ? styles.container : styles.notMeContainer}>
-            <View style={data.sender === user ? styles.box : styles.notMeBox}>
-                <Text style={data.sender === user ? styles.message : styles.notMeMessage}>
+        <View style={[styles.container, data.isMine ? { alignItems: 'flex-end' } : { alignItems: 'flex-start' }]}>
+            <View style={[styles.messageContainer, data.isMine ? styles.containerRadiusIsMine : styles.containerRadiusIsNotMine]}>
+                <Text style={data.isMine ? { color: 'white' } : { color: 'black' }}>
                     {data.content}
                 </Text>
             </View>
 
-            <View style={styles.timestampContainer}>
-                <Text style={styles.timestamp}>{handleTimeStampToDate(data.timestamp)}</Text>
-            </View>
+            <Text style={[styles.timestamp]}>
+                {handleTimeStampToDate(data.createdAt)}
+            </Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'flex-end',
+        marginBottom: 4,
+        display: 'flex',
     },
-    notMeContainer: {
-        alignItems: 'flex-start',
-    },
-    box: {
+    messageContainer: {
         maxWidth: '70%',
         padding: 14,
-        margin: 6,
-        borderRadius: 20,
-        justifyContent: 'center',
-        backgroundColor: 'rgb(87, 101, 242)',
     },
-    notMeBox: {
-        maxWidth: '70%',
-        padding: 14,
-        margin: 6,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        backgroundColor: 'rgb(226, 226, 226)',
-    },
-    sender: {
-        color: 'white',
-    },
-    notMeSender: {
-        paddingTop: 14,
-        paddingLeft: 6,
-        color: 'rgb(200, 200, 200)',
-    },
-    message: {
-        color: 'white',
-    },
-    notMeMessage: {
-        color: 'black',
-    },
-    timestampContainer: {
-        paddingHorizontal: 14,
-    },
-
     timestamp: {
-        alignSelf: 'flex-end',
         fontSize: 10,
     },
+    containerRadiusIsMine: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        backgroundColor: 'rgb(87, 101, 242)'
+    },
+    containerRadiusIsNotMine: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
+        backgroundColor: 'rgb(226, 226, 226)'
+    },
+
 });

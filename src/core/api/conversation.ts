@@ -1,37 +1,87 @@
 import { useEffect, useState } from 'react';
-import { TALK_AWAY_API_BASE_URL } from '@env';
+import { TALK_AWAY_API_BASE_URL, IPCONFIG_API_BASE_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
-const socket: Socket = io('https://api-tallkaway.koyeb.app/chat');
+import { ConversationResponse, DirectConversation } from '../../domains/Conversation';
 
-export const getConversation = (token: string | undefined) => {
-    const [conversation, setConversation] = useState<any>([]); //pour l'instant le type est en any mais c'est à changer
-
+export const getConversationMessages = async (accessToken: string, friendId: string) => {
     const BASE_URL = TALK_AWAY_API_BASE_URL;
+    return await fetch(`${BASE_URL}/chat/conversation/${friendId}/messages`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+        },
+    })
+    .then((response: Response): Promise<any> => {
+        if (response.status === 401) {
+            return Promise.resolve({
+                success: false,
+                error: 'BAD_CREDENTIALS',
+            });
+        }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/chat/conversations/`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Baerer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
+        if (!response.ok) {
+            throw new Error(
+                `Upstream auth HTTP error: ${response.status} ${response.statusText}`
+            );
+        }
 
-                if (response.ok) {
-                    const json = await response.json();
-                    setConversation(json.data);
-                } else {
-                    console.error('Error fetching conversation data:', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching conversation data:', error);
-            }
+        return response.json().then((json) => {
+            return {
+                success: true,
+                data: json.data, 
+            };
+        });
+    })
+    .catch((e) => {
+        return {
+            success: false,
+            error: e.error || 'An error occured during fetching conversation.',
         };
+    });
+   
+};
 
-        fetchData();
-    }, []);
+export const getConversationId = async (accessToken: string, friendId: string) => {
+    const BASE_URL = TALK_AWAY_API_BASE_URL;
+    return await fetch(`${BASE_URL}/chat/conversation/${friendId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+        },
+    })
+    .then((response: Response): Promise<ConversationResponse> => {
+        if (response.status === 401) {
+            return Promise.resolve({
+                success: false,
+                error: 'BAD_CREDENTIALS',
+            });
+        }
 
-    return conversation;
+        if (!response.ok) {
+            throw new Error(
+                `Upstream auth HTTP error: ${response.status} ${response.statusText}`
+            );
+        }
+
+        return response.json().then((json) => {
+            return {
+                success: true,
+                id: json.data.id,
+                user1Id: json.data.user1Id,
+                user2Id: json.data.user2Id,
+                createdAt: json.data.createdAt,
+            };
+        });
+    })
+    .catch((e) => {
+        return {
+            success: false,
+            error: e.error || 'An error occured during fetching conversation.',
+        };
+    });
+
 };

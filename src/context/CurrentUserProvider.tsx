@@ -50,6 +50,7 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
             deleteCredentials('accessToken');
             deleteCredentials('refreshToken');
             setUser(undefined);
+            
             navigation.navigate('SignUp');
         } catch (error) {
             console.error('Error logging out:', error);
@@ -79,10 +80,8 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
     async function updateUser() {
         const userData = await getUser(user?.id ?? '');
         if (userData.success) {
-            console.log(userData.data);
             setUser(userData.data);
         }
-
     }
 
     const contextValue: AuthContextProps = {

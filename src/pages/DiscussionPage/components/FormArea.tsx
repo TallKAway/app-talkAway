@@ -3,32 +3,36 @@ import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { SendButton } from '../../../components/Button/SendButton';
 import SendButtonSVG from '../../../common/svg/up-arrow.svg';
 
-export const FormArea = () => {
-    const [messageValue, setMessageValue] = useState('');
+export const FormArea = ({ onMessageValueChange, messageValueFromFormArea }: any) => {
+    const [messageValue, setMessageValue] = useState<string>('');
+
+    const handleTextChange = (text: string) => {
+        setMessageValue(text);
+        onMessageValueChange(text); // Cette ligne appelle la fonction du parent
+      };
+
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
                 placeholder="Messages"
-                onChangeText={(text) => setMessageValue(text)}
+                onChangeText={handleTextChange}   
+                value={messageValueFromFormArea}
             />
-            <SendButton isDisabled={messageValue ? false : true} submitFunction={() => {}} />
+            {/* <SendButton isDisabled={messageValue ? false : true} submitFunction={() => {}} /> */}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: 'auto',
-        flexDirection: 'row',
+        width: '85%',
     },
     input: {
-        width: '85%',
+        width: '100%',
         borderWidth: 1,
         borderColor: 'rgb(226, 226, 226)',
         borderRadius: 22,
-        margin: 5,
         padding: 10,
     },
 });

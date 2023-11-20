@@ -37,7 +37,7 @@ export const HeaderButton = ({ title, path }: HeaderButtonProps) => {
 
 const styles = StyleSheet.create({
     headerName: {
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: 22,
     },
 
