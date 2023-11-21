@@ -6,7 +6,6 @@ export const ContactScreen = () => {
     return (
         <SafeAreaView style={styles.contactWrapper}>
             <Contact />
-            
         </SafeAreaView>
     );
 };

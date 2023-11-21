@@ -63,7 +63,7 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
             setCredentials('accessToken', tokens.accessToken);
             setCredentials('refreshToken', tokens.refreshToken);
             setUser(tokens.user);
-            navigation.navigate('HomePage');
+            navigation.navigate('Chat');
         }
     }
 
@@ -73,7 +73,7 @@ export const CurrentUserProvider = ({ children }: PropsWithChildren) => {
             setCredentials('accessToken', tokens.accessToken);
             setCredentials('refreshToken', tokens.refreshToken);
             setUser(tokens.user);
-            navigation.navigate('HomePage');
+            navigation.navigate('Chat');
         }
     }
 

@@ -24,7 +24,7 @@ export const HeaderButton = ({ title, path }: HeaderButtonProps) => {
             <TouchableOpacity
                 style={styles.backButton}
                 onPress={() => {
-                    navigation.navigate('Contact');
+                    navigation.navigate('Chat');
                 }}
             >
                 <View>

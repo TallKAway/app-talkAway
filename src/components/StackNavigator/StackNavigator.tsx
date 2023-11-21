@@ -19,15 +19,17 @@ export const StackNavigator = () => {
             screenOptions={{
                 headerShown: true,
             }}
-            initialRouteName={isAuthenticated ? 'HomePage' : 'SignUp'}
+            initialRouteName={isAuthenticated ? 'Chat' : 'SignUp'}
         >
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
             <Stack.Screen
-                name="HomePage"
-                component={ContactScreen}
-                options={{ title: 'TalkAway' }}
+                name="Chat"
+                component={TabNavigator}
+                // options={{ title: 'Chat' }}
+                options={{ headerShown: false }}
             />
+
             <Stack.Screen
                 name="Discussion"
                 component={DiscussionPage}

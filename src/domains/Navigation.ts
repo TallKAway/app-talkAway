@@ -3,11 +3,12 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type ScreenStackNavigatorParamList = {
     SignUp: undefined;
     LogIn: undefined;
-    HomePage: undefined;
+    Chat: undefined;
     Discussion: { username: string | undefined; id: string };
 };
 export type ScreenStackBottomNavigatorParamList = {
-    Contact: undefined;
+    Chat: undefined;
+    FriendsList: undefined;
     Settings: undefined;
 };
 
