@@ -17,4 +17,6 @@ Technos utilisées :
     - react-native-svg
     - react-native-vector-icons
 - NodeJS + Express pour le back
+- Prisma
+- MongoDB
 
