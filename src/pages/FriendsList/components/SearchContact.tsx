@@ -15,7 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 import { SearchInput } from '../../../components/Input/SearchInput';
 import { useNavigation } from '@react-navigation/native';
-import { ContactItem } from './ContactItem';
+import { ContactItem } from "../../../components/ContactItem/ContactItem"
 import users from '../../../data/users.json';
 
 export const SearchContact = () => {

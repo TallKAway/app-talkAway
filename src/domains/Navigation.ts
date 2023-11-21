@@ -5,6 +5,8 @@ export type ScreenStackNavigatorParamList = {
     LogIn: undefined;
     Chat: undefined;
     Discussion: { username: string | undefined; id: string };
+    AddContactPage: undefined;
+    FriendsList: undefined;
 };
 export type ScreenStackBottomNavigatorParamList = {
     Chat: undefined;

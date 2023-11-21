@@ -17,7 +17,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { useEffect, useState } from 'react';
 import { SearchInput } from '../../../components/Input/SearchInput';
 import { useNavigation } from '@react-navigation/native';
-import { ContactItem } from './ContactItem';
+import { ContactItem } from '../../../components/ContactItem/ContactItem';
 import { SearchContact } from './SearchContact';
 import users from '../../../data/users.json';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
@@ -32,11 +32,12 @@ export type User = {
 };
 
 export const Contact = () => {
-    const navigation = useNavigation<ScreenStackNavigatorProps>();
     const [hasFriends, setHasFriends] = useState(false);
     const [listContactSection, setContactListSection] = useState<boolean>(true);
     const [searchContactSection, setSearchContactSection] = useState<boolean>(false);
     const [notificationSection, setNotificationSection] = useState<boolean>(false);
+
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     const [user, setUser] = useState<User[]>([
         {
@@ -64,7 +65,7 @@ export const Contact = () => {
                     <View style={styles.header}>
                         <Text style={styles.titleH1}>Contacts</Text>
                         <View style={styles.headerNavbar}>
-                            {!listContactSection ? (
+                            {/* {!listContactSection ? (
                                 <Pressable
                                     style={styles.headerButton}
                                     onPress={() => {
@@ -96,7 +97,9 @@ export const Contact = () => {
                                 }}
                             >
                                 <IconIonicons name="person-add" size={25} color="black" />
-                            </Pressable>
+                            </Pressable> */}
+
+                            <Button title='Ajouter un ami' onPress={()=>{navigation.navigate('AddContactPage')}}></Button>
                         </View>
                     </View>
                     <View>

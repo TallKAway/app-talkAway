@@ -8,6 +8,8 @@ import { LogInScreen } from '../../pages/AuthenticatePage/LogInScreen';
 import { SignUpScreen } from '../../pages/AuthenticatePage/SignUpScreen';
 import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
 import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
+import { AddContactPage } from '../../pages/AddContact/AddContactPage';
+import { FriendsListPage } from '../../pages/FriendsList/FriendsListPage';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 
@@ -24,11 +26,17 @@ export const StackNavigator = () => {
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
             <Stack.Screen
-                name="Chat"
-                component={TabNavigator}
-                // options={{ title: 'Chat' }}
+                name="AddContactPage"
+                component={AddContactPage}
+                options={{ title: 'Ajouter un ami' }}
+            />
+            <Stack.Screen
+                name="FriendsList"
+                component={FriendsListPage}
                 options={{ headerShown: false }}
             />
+
+            <Stack.Screen name="Chat" component={TabNavigator} options={{ headerShown: false }} />
 
             <Stack.Screen
                 name="Discussion"
@@ -41,9 +49,6 @@ export const StackNavigator = () => {
                         ) : (
                             <Text>Default Title</Text>
                         ),
-                    // headerLeft: () => (
-                    //     <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
-                    // ),
                 })}
             />
         </Stack.Navigator>
