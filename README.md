@@ -3,10 +3,8 @@
 ### Pour run le projet :
 ``` 
 npm install 
-# or 
-npm install --force
 
-npm run dev
+npx expo start
 ```
 
 Technos utilisées : 
