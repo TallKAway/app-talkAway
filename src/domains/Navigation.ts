@@ -5,7 +5,7 @@ export type ScreenStackNavigatorParamList = {
     LogIn: undefined;
 };
 export type ScreenStackBottomNavigatorParamList = {
-    Home: undefined;
+    Chat: undefined;
     Contact: undefined;
 };
 

@@ -24,9 +24,9 @@ export default function App() {
                     screenOptions={{
                         headerShown: false,
                     }}
-                    initialRouteName="Home"
+                    initialRouteName="Chat"
                 >
-                    <TabStack.Screen name="Home" component={DiscussionPage} />
+                    <TabStack.Screen name="Chat" component={DiscussionPage} />
                     <TabStack.Screen name="Contact" component={ContactScreen} />
                 </TabStack.Navigator>
             ) : (

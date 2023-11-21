@@ -45,7 +45,7 @@ export const Contact = () => {
             email: 'dylan.lgvn@gmail.com',
             password: 'mdp1',
             cellphone: '+33630004376',
-            friends: [1, 2],
+            friends: [1, 2, 3],
         },
     ]);
 
@@ -122,7 +122,7 @@ export const Contact = () => {
                                         <Text>Tu n'as pas encore d'amis le sang</Text>
                                         <Button
                                             onPress={() => {
-                                                navigation.navigate('Home'); // En attendant la page/rubique d'ajout de contact
+                                                navigation.navigate('Chat'); // En attendant la page/rubique d'ajout de contact
                                             }}
                                             title="Ajouter un contact"
                                         />
