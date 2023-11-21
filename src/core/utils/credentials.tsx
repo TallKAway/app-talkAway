@@ -1,4 +1,5 @@
-import { TALK_AWAY_API_BASE_URL } from '@env';
+// import { TALK_AWAY_API_BASE_URL } from '@env';
+import { TALK_AWAY_API_BASE_URL } from '../../utils/Constant';
 import * as SecureStore from 'expo-secure-store';
 import { isExpired } from 'react-jwt';
 import { CredentialsToken } from '../../domains/Credentials';
@@ -76,7 +77,6 @@ export async function checkTokenValidity(credentials: CredentialsToken) {
 }
 
 export async function getUser(userId: string) {
-
     const BASE_URL = TALK_AWAY_API_BASE_URL;
 
     const accessToken = await SecureStore.getItemAsync('accessToken');

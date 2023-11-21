@@ -1,12 +1,13 @@
-import { TALK_AWAY_API_BASE_URL } from '@env';
+// import { TALK_AWAY_API_BASE_URL } from '@env';
 import { AuthenticationResponse, UserCredentials } from '../../../domains/Credentials';
+import { TALK_AWAY_API_BASE_URL } from '../../../utils/Constant';
 
-export const login =  (
+export const login = (
     email: UserCredentials['email'],
     password: UserCredentials['password']
 ): Promise<AuthenticationResponse> => {
     const BASE_URL = TALK_AWAY_API_BASE_URL;
-    
+
     return fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {

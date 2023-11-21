@@ -19,7 +19,8 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { getConversationMessages, getConversationId } from '../../core/api/conversation';
 import { useUserContext } from '../../context/CurrentUserProvider';
 import { io, Socket } from 'socket.io-client';
-import { IPCONFIG_API_BASE_URL, TALK_AWAY_API_BASE_URL } from '@env';
+// import { IPCONFIG_API_BASE_URL, TALK_AWAY_API_BASE_URL } from '@env';
+import { IPCONFIG_API_BASE_URL } from '../../utils/Constant';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { SendButton } from '../../components/Button/SendButton';
 interface MessagesProps {
@@ -32,7 +33,7 @@ interface MessagesProps {
 }
 
 export const DiscussionPage = ({ route }: any) => {
-    const { authTokens} = useUserContext();
+    const { authTokens } = useUserContext();
     const { id } = route.params;
     const accessToken = authTokens?.accessToken;
     const headerheight = useHeaderHeight();
@@ -48,34 +49,39 @@ export const DiscussionPage = ({ route }: any) => {
     const fetchConversation = async (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => {
         if (currentRoom) {
             socket.emit('leave_conversation', { conversationId: currentRoom });
-          }
+        }
 
         if (accessToken) {
             const conversationData = await getConversationId(accessToken, id);
             if ('id' in conversationData) {
-
-                socket.emit('join_conversation', { token: accessToken, receiverId: id, conversationId: conversationData.id });
+                socket.emit('join_conversation', {
+                    token: accessToken,
+                    receiverId: id,
+                    conversationId: conversationData.id,
+                });
                 setCurrentRoom(conversationData.id);
 
-                const conversationMessages = await getConversationMessages(accessToken, conversationData.id);
+                const conversationMessages = await getConversationMessages(
+                    accessToken,
+                    conversationData.id
+                );
                 if (conversationMessages.success) {
                     setMessageData(conversationMessages.data);
                 }
-                
             }
         }
     };
 
     const handleMessageValueChange = (newValue: string) => {
         setMessageValueFromFormArea(newValue);
-      };
+    };
 
     const handleSendMessage = () => {
         if (socketRef.current && accessToken && currentRoom && messageValueFromFormArea) {
             socketRef.current.emit('send_message', {
-            token: accessToken,
-            receiverId: id,
-            content: messageValueFromFormArea
+                token: accessToken,
+                receiverId: id,
+                content: messageValueFromFormArea,
             });
             setMessageValueFromFormArea('');
         } else {
@@ -86,22 +92,21 @@ export const DiscussionPage = ({ route }: any) => {
     useEffect(() => {
         socketRef.current = io(SOCKET_SERVER_URL, {
             path: '/socket.io',
-          });
-          
-          socketRef.current.on('connect', () => {
-            setIsConnected(true);
-          });
-      
-          socketRef.current.on('disconnect', () => {
-            setIsConnected(false);
-          });
+        });
 
-          socketRef.current.on('message', (message) => {
+        socketRef.current.on('connect', () => {
+            setIsConnected(true);
+        });
+
+        socketRef.current.on('disconnect', () => {
+            setIsConnected(false);
+        });
+
+        socketRef.current.on('message', (message) => {
             if (message.direcConversationId === currentRoom) {
                 setMessageData((prevMessages) => [...prevMessages, message]);
             }
-           
-          });
+        });
 
         fetchConversation(socketRef.current);
 
@@ -115,7 +120,6 @@ export const DiscussionPage = ({ route }: any) => {
     }, [currentRoom]);
     return (
         <SafeAreaView style={styles.container}>
-
             <View>
                 <Text>Connecté au Socket : {isConnected ? 'Oui' : 'Non'}</Text>
             </View>
@@ -134,8 +138,14 @@ export const DiscussionPage = ({ route }: any) => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.inputContainer}>
-                        <FormArea onMessageValueChange={handleMessageValueChange} messageValueFromFormArea={messageValueFromFormArea}/>
-                        <SendButton isDisabled={messageValueFromFormArea ? false : true} submitFunction={handleSendMessage} />
+                        <FormArea
+                            onMessageValueChange={handleMessageValueChange}
+                            messageValueFromFormArea={messageValueFromFormArea}
+                        />
+                        <SendButton
+                            isDisabled={messageValueFromFormArea ? false : true}
+                            submitFunction={handleSendMessage}
+                        />
                     </View>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
@@ -162,5 +172,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 
-    keyboard: {},  
+    keyboard: {},
 });
