@@ -23,7 +23,11 @@ export const StackNavigator = () => {
         >
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="HomePage" component={ContactScreen} options={{ title: 'TalkAway' }} />
+            <Stack.Screen
+                name="HomePage"
+                component={ContactScreen}
+                options={{ title: 'TalkAway' }}
+            />
             <Stack.Screen
                 name="Discussion"
                 component={DiscussionPage}
