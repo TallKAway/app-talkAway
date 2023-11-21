@@ -99,7 +99,21 @@ export const Contact = () => {
                                 <IconIonicons name="person-add" size={25} color="black" />
                             </Pressable> */}
 
-                            <Button title='Ajouter un ami' onPress={()=>{navigation.navigate('AddContactPage')}}></Button>
+                            <Pressable
+                                style={styles.headerButton}
+                                onPress={() => {
+                                    navigation.navigate('AddContactPage');
+                                }}
+                            >
+                                <IconIonicons name="person-add" size={25} color="black" />
+                            </Pressable>
+
+                            {/* <Button
+                                title="Ajouter un ami"
+                                onPress={() => {
+                                    navigation.navigate('AddContactPage');
+                                }}
+                            ></Button> */}
                         </View>
                     </View>
                     <View>
