@@ -1,4 +1,20 @@
-# app-talkAway
+# TalkAway Application
 
+### Pour run le projet :
+``` 
+npm install 
 
-test webhook 2
+npx expo start
+```
+
+Technos utilisées : 
+
+- React Native & Expo
+- Typescript
+- CSS
+- Librairie :
+    - react-navigattion
+    - react-native-svg
+    - react-native-vector-icons
+- NodeJS + Express pour le back
+
