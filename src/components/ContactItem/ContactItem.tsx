@@ -5,7 +5,7 @@ import { ScreenStackNavigatorProps } from '../../domains/Navigation';
 
 interface SearchInputProps {
     username: string;
-    id: number;
+    id: string;
 }
 
 export const ContactItem = ({ username, id }: SearchInputProps) => {
@@ -25,7 +25,7 @@ export const ContactItem = ({ username, id }: SearchInputProps) => {
                     size={25}
                     color="black"
                     onPress={() => {
-                        navigation.navigate('ContactDetail', {});
+                        navigation.navigate('ContactDetail');
                     }}
                 />
                 <IconFeather

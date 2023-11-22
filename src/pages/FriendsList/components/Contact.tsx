@@ -28,7 +28,7 @@ export type User = {
     email: string;
     password: string;
     cellphone: string;
-    friends: Array<number>;
+    friends: Array<string>;
 };
 
 export const Contact = () => {
@@ -46,7 +46,7 @@ export const Contact = () => {
             email: 'dylan.lgvn@gmail.com',
             password: 'mdp1',
             cellphone: '+33630004376',
-            friends: [1, 2, 3],
+            friends: ['1', '2', '3', '4'],
         },
     ]);
 
