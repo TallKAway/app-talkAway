@@ -1,9 +1,9 @@
 import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
-import { Contact } from './components/Contact';
+import { FriendsList } from './components/FriendsList';
 export const FriendsListPage = () => {
     return (
         <SafeAreaView style={styles.contactWrapper}>
-            <Contact />
+            <FriendsList />
         </SafeAreaView>
     );
 };

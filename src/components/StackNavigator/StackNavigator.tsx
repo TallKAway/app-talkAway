@@ -32,7 +32,7 @@ export const StackNavigator = () => {
                 options={{ title: 'Ajouter un ami' }}
             />
             <Stack.Screen
-                name="FriendsList"
+                name="Contact"
                 component={FriendsListPage}
                 options={{ headerShown: false }}
             />

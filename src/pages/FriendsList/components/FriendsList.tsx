@@ -14,7 +14,7 @@ export type User = {
     cellphone: string;
 };
 
-export const Contact = () => {
+export const FriendsList = () => {
     const [hasFriends, setHasFriends] = useState(false);
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
@@ -52,7 +52,7 @@ export const Contact = () => {
             {hasFriends ? (
                 <FlatList
                     data={user?.friends}
-                    renderItem={({ item }) => <ContactItem username={item.username} id={item.id}/>}
+                    renderItem={({ item }) => <ContactItem username={item.username} id={item.id} />}
                     style={styles.contactList}
                 />
             ) : (

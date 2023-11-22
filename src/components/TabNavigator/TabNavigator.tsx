@@ -18,7 +18,7 @@ export function TabNavigator() {
             initialRouteName="Chat"
         >
             <TabStack.Screen name="Chat" component={ContactScreen} />
-            <TabStack.Screen name="FriendsList" component={FriendsListPage} />
+            <TabStack.Screen name="Contact" component={FriendsListPage}/>
         </TabStack.Navigator>
     );
 }
