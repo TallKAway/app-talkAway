@@ -31,7 +31,7 @@ export const FindContact = () => {
                         renderItem={({ item }) =>
                             research.length > 0 && item.username.includes(research) ? (
                                 <>
-                                    <ContactItem username={item.username} />
+                                    <ContactItem username={item.username} id={''} />
                                 </>
                             ) : null
                         }

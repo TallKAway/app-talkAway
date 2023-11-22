@@ -25,7 +25,7 @@ export const ContactItem = ({ username, id }: SearchInputProps) => {
                     size={25}
                     color="black"
                     onPress={() => {
-                        navigation.navigate('ContactDetail');
+                        navigation.navigate('ContactDetail', { username: username, id: id });
                     }}
                 />
                 <IconFeather

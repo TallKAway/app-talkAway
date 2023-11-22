@@ -36,7 +36,18 @@ export const StackNavigator = () => {
                 component={FriendsListPage}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen name="ContactDetail" component={ContactDetailsPage} />
+            <Stack.Screen
+                name="ContactDetail"
+                component={ContactDetailsPage}
+                options={({ route }) => ({
+                    headerTitle: () =>
+                        route.params.username ? (
+                            <HeaderName>{route.params.username}</HeaderName>
+                        ) : (
+                            <Text>Default Title</Text>
+                        ),
+                })}
+            />
 
             <Stack.Screen name="Chat" component={TabNavigator} options={{ headerShown: false }} />
 

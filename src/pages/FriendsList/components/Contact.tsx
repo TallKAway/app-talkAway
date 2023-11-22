@@ -1,57 +1,30 @@
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableWithoutFeedback,
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    FlatList,
-    Button,
-    Pressable,
-    ScrollView,
-} from 'react-native';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import { useEffect, useState } from 'react';
-import { SearchInput } from '../../../components/Input/SearchInput';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { Button, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import { ContactItem } from '../../../components/ContactItem/ContactItem';
-import { SearchContact } from './SearchContact';
-import users from '../../../data/users.json';
+import { useUserContext } from '../../../context/CurrentUserProvider';
 import { ScreenStackNavigatorProps } from '../../../domains/Navigation';
 
 export type User = {
-    id: number;
+    id: string;
     username: string;
     email: string;
     password: string;
     cellphone: string;
-    friends: Array<string>;
 };
 
 export const Contact = () => {
     const [hasFriends, setHasFriends] = useState(false);
-    const [listContactSection, setContactListSection] = useState<boolean>(true);
-    const [searchContactSection, setSearchContactSection] = useState<boolean>(false);
-    const [notificationSection, setNotificationSection] = useState<boolean>(false);
-
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
-    const [user, setUser] = useState<User[]>([
-        {
-            id: 1,
-            username: 'wyattFox',
-            email: 'dylan.lgvn@gmail.com',
-            password: 'mdp1',
-            cellphone: '+33630004376',
-            friends: ['1', '2', '3', '4'],
-        },
-    ]);
+    const { user } = useUserContext();
 
     const renderContactItem = () => {
-        return user[0].friends.length > 0;
+        if (user) {
+            return true;
+        }
+        return false;
     };
 
     useEffect(() => {
@@ -59,103 +32,41 @@ export const Contact = () => {
     }, [renderContactItem]);
 
     return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={styles.contactWrapper}>
-                    <View style={styles.header}>
-                        <Text style={styles.titleH1}>Contacts</Text>
-                        <View style={styles.headerNavbar}>
-                            {/* {!listContactSection ? (
-                                <Pressable
-                                    style={styles.headerButton}
-                                    onPress={() => {
-                                        setContactListSection(true);
-                                        setSearchContactSection(false);
-                                        setNotificationSection(false);
-                                    }}
-                                >
-                                    <IconAntDesign name="arrowleft" size={25} color="black" />
-                                </Pressable>
-                            ) : null}
-                            <Pressable
-                                style={styles.headerButton}
-                                onPress={() => {
-                                    setNotificationSection(true);
-                                    setSearchContactSection(false);
-                                    setContactListSection(false);
-                                }}
-                            >
-                                <IconFontAwesome name="bell" size={25} color="black" />
-                            </Pressable>
-
-                            <Pressable
-                                style={styles.headerButton}
-                                onPress={() => {
-                                    setSearchContactSection(true);
-                                    setContactListSection(false);
-                                    setNotificationSection(false);
-                                }}
-                            >
-                                <IconIonicons name="person-add" size={25} color="black" />
-                            </Pressable> */}
-
-                            <Pressable
-                                style={styles.headerButton}
-                                onPress={() => {
-                                    navigation.navigate('AddContactPage');
-                                }}
-                            >
-                                <IconIonicons name="person-add" size={25} color="black" />
-                            </Pressable>
-
-                            {/* <Button
-                                title="Ajouter un ami"
-                                onPress={() => {
-                                    navigation.navigate('AddContactPage');
-                                }}
-                            ></Button> */}
-                        </View>
-                    </View>
-                    <View>
-                        {listContactSection ? (
-                            <View
-                                style={{
-                                    ...styles.contactListWrapper,
-                                    ...(hasFriends ? {} : { alignItems: 'center' }),
-                                }}
-                            >
-                                {hasFriends ? (
-                                    <FlatList
-                                        data={users}
-                                        renderItem={({ item }) =>
-                                            user[0].friends.includes(item.id) ? (
-                                                <ContactItem
-                                                    username={item.username}
-                                                    id={item.id}
-                                                />
-                                            ) : null
-                                        }
-                                        style={styles.contactList}
-                                    />
-                                ) : (
-                                    <View>
-                                        <Text>Tu n'as pas encore d'amis le sang</Text>
-                                        <Button
-                                            onPress={() => {
-                                                navigation.navigate('Chat'); // En attendant la page/rubique d'ajout de contact
-                                            }}
-                                            title="Ajouter un contact"
-                                        />
-                                    </View>
-                                )}
-                            </View>
-                        ) : null}
-
-                        {searchContactSection ? <SearchContact /> : null}
+        <>
+            <View style={styles.contactWrapper}>
+                <View style={styles.header}>
+                    <Text style={styles.titleH1}>Contacts</Text>
+                    <View style={styles.headerNavbar}>
+                        <Pressable
+                            style={styles.headerButton}
+                            onPress={() => {
+                                navigation.navigate('AddContactPage');
+                            }}
+                        >
+                            <IconIonicons name="person-add" size={25} color="black" />
+                        </Pressable>
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+            </View>
+
+            {hasFriends ? (
+                <FlatList
+                    data={user?.friends}
+                    renderItem={({ item }) => <ContactItem username={item.username} id={item.id}/>}
+                    style={styles.contactList}
+                />
+            ) : (
+                <View>
+                    <Text>Tu n'as pas encore d'amis le sang</Text>
+                    <Button
+                        onPress={() => {
+                            navigation.navigate('AddContactPage'); // En attendant la page/rubique d'ajout de contact
+                        }}
+                        title="Ajouter un contact"
+                    />
+                </View>
+            )}
+        </>
     );
 };
 
@@ -192,7 +103,9 @@ const styles = StyleSheet.create({
     searchTextInput: {
         borderWidth: 2,
     },
-    contactList: {},
+    contactList: {
+        padding: 14,
+    },
     titleH2: {
         fontSize: 16,
         fontWeight: 'bold',

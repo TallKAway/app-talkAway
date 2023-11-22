@@ -7,7 +7,7 @@ export type ScreenStackNavigatorParamList = {
     Discussion: { username: string | undefined; id: string };
     AddContactPage: undefined;
     FriendsList: undefined;
-    ContactDetail: undefined;
+    ContactDetail: { username: string | undefined; id: string };
 };
 export type ScreenStackBottomNavigatorParamList = {
     Chat: undefined;
