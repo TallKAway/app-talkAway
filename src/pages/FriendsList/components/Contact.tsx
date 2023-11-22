@@ -129,7 +129,10 @@ export const Contact = () => {
                                         data={users}
                                         renderItem={({ item }) =>
                                             user[0].friends.includes(item.id) ? (
-                                                <ContactItem username={item.username} />
+                                                <ContactItem
+                                                    username={item.username}
+                                                    id={item.id}
+                                                />
                                             ) : null
                                         }
                                         style={styles.contactList}

@@ -10,6 +10,7 @@ import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
 import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
 import { AddContactPage } from '../../pages/AddContact/AddContactPage';
 import { FriendsListPage } from '../../pages/FriendsList/FriendsListPage';
+import { ContactDetailsPage } from '../../pages/ContactDetails/ContactDetailsPage';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 
@@ -35,6 +36,7 @@ export const StackNavigator = () => {
                 component={FriendsListPage}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen name="ContactDetail" component={ContactDetailsPage} />
 
             <Stack.Screen name="Chat" component={TabNavigator} options={{ headerShown: false }} />
 
