@@ -1,4 +1,14 @@
-# TalkAway Application
+<h1 align="center"><strong> TalkAway Authentification API</strong></h1>
+
+<div align="center"><h2>🚀 Cet Api est construit avec la stack : Node js - Express - MongoDB - Prisma </h2></div>
+
+<h1 align="center">
+
+![](./docs/readme_stack.png)
+
+</h1>
+
+
 
 ## Créez un fichier .env et y insérer : 
 
