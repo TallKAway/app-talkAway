@@ -22,6 +22,8 @@ export const TALK_AWAY_API_BASE_URL = PATH_URL
 export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
 ```
 
+La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine.
+
 
 ### Pour run le projet :
 ``` 
