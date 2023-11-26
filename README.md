@@ -10,11 +10,18 @@
 
 
 
-## Créez un fichier .env et y insérer : 
+## Utilisez les variables d'environnements : 
+```
+TALK_AWAY_API_AUTH_URL = PATH_URL
+IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
+```
 
+## ou rendez-vous dans le dossier utils pour update les variables const :
 ```
-TALK_AWAY_API_AUTH_URL = ""
+export const TALK_AWAY_API_BASE_URL = PATH_URL
+export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
 ```
+
 
 ### Pour run le projet :
 ``` 
