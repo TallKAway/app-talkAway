@@ -1,5 +1,11 @@
 # TalkAway Application
 
+## Créez un fichier .env et y insérer : 
+
+```
+TALK_AWAY_API_AUTH_URL = ""
+```
+
 ### Pour run le projet :
 ``` 
 npm install 
@@ -16,7 +22,5 @@ Technos utilisées :
     - react-navigattion
     - react-native-svg
     - react-native-vector-icons
-- NodeJS + Express pour le back
-- Prisma
-- MongoDB
+
 
