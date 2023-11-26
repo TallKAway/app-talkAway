@@ -8,37 +8,35 @@
 
 </h1>
 
+### Utilisez les variables d'environnements :
 
-
-### Utilisez les variables d'environnements : 
 ```
+# Connexion API
 TALK_AWAY_API_AUTH_URL = PATH_URL
+
+# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
 IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
 ```
 
 ### Ou rendez-vous dans le dossier utils à la racine du projet pour update les variables const :
+
 ```
+# Connexion API
 export const TALK_AWAY_API_BASE_URL = PATH_URL
+
+# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
 export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
 ```
 
-La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine.
-
-
 ### Pour run le projet :
-``` 
-npm install 
+
+```
+npm install
 
 npx expo start
 ```
 
-Technos utilisées : 
-
-- React Native & Expo
-- Typescript
-- CSS
-- Librairie :
-    - react-navigattion
-    - react-native-svg
-    - react-native-vector-icons
-
+## Librairies utilisées : 
+- react-navigattion
+- react-native-svg
+- react-native-vector-icons
