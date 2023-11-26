@@ -1,6 +1,6 @@
 <h1 align="center"><strong> TalkAway Authentification API</strong></h1>
 
-<div align="center"><h2>🚀 Cet Api est construit avec la stack : Node js - Express - MongoDB - Prisma </h2></div>
+<div align="center"><h2>🚀 Cette app est construite avec la stack : React Native - Typescript - Expo </h2></div>
 
 <h1 align="center">
 
