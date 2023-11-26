@@ -1,11 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Contact } from './components/Contact';
-
-export const ContactScreen = () => {
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { ContactDetails } from './components/ContactDetails';
+export const ContactDetailsPage = () => {
     return (
         <SafeAreaView style={styles.contactWrapper}>
-            <Contact />
+            <ContactDetails />
         </SafeAreaView>
     );
 };

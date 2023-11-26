@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FriendsListPage } from '../../pages/FriendsList/FriendsListPage';
 import { useNavigation } from '@react-navigation/native';
 import {
     ScreenStackBottomNavigatorParamList,
-    ScreenStackBottomNavigatorProps
+    ScreenStackBottomNavigatorProps,
 } from '../../domains/Navigation';
 import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
 
@@ -14,9 +15,10 @@ export function TabNavigator() {
             screenOptions={({ route }) => ({
                 headerShown: false,
             })}
-            initialRouteName="Contact"
+            initialRouteName="Chat"
         >
-            <TabStack.Screen name="Contact" component={ContactScreen} />
+            <TabStack.Screen name="Chat" component={ContactScreen} />
+            <TabStack.Screen name="Contact" component={FriendsListPage}/>
         </TabStack.Navigator>
     );
 }

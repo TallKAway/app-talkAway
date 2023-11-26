@@ -8,6 +8,9 @@ import { LogInScreen } from '../../pages/AuthenticatePage/LogInScreen';
 import { SignUpScreen } from '../../pages/AuthenticatePage/SignUpScreen';
 import { DiscussionPage } from '../../pages/DiscussionPage/DiscussionPage';
 import { ContactScreen } from '../../pages/ContactPage/ContactScreen';
+import { AddContactPage } from '../../pages/AddContact/AddContactPage';
+import { FriendsListPage } from '../../pages/FriendsList/FriendsListPage';
+import { ContactDetailsPage } from '../../pages/ContactDetails/ContactDetailsPage';
 
 const Stack = createNativeStackNavigator<ScreenStackNavigatorParamList>();
 
@@ -19,11 +22,35 @@ export const StackNavigator = () => {
             screenOptions={{
                 headerShown: true,
             }}
-            initialRouteName={isAuthenticated ? 'HomePage' : 'SignUp'}
+            initialRouteName={isAuthenticated ? 'Chat' : 'SignUp'}
         >
             <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
             <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="HomePage" component={ContactScreen} options={{ title: 'TalkAway' }} />
+            <Stack.Screen
+                name="AddContactPage"
+                component={AddContactPage}
+                options={{ title: 'Ajouter un ami' }}
+            />
+            <Stack.Screen
+                name="Contact"
+                component={FriendsListPage}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="ContactDetail"
+                component={ContactDetailsPage}
+                options={({ route }) => ({
+                    headerTitle: () =>
+                        route.params.username ? (
+                            <HeaderName>{route.params.username}</HeaderName>
+                        ) : (
+                            <Text>Default Title</Text>
+                        ),
+                })}
+            />
+
+            <Stack.Screen name="Chat" component={TabNavigator} options={{ headerShown: false }} />
+
             <Stack.Screen
                 name="Discussion"
                 component={DiscussionPage}
@@ -35,9 +62,6 @@ export const StackNavigator = () => {
                         ) : (
                             <Text>Default Title</Text>
                         ),
-                    // headerLeft: () => (
-                    //     <HeaderButton title={route.name} path={'Contact'}></HeaderButton>
-                    // ),
                 })}
             />
         </Stack.Navigator>

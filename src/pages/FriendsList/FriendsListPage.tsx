@@ -1,11 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Contact } from './components/Contact';
-
-export const ContactScreen = () => {
+import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { FriendsList } from './components/FriendsList';
+export const FriendsListPage = () => {
     return (
         <SafeAreaView style={styles.contactWrapper}>
-            <Contact />
+            <FriendsList />
         </SafeAreaView>
     );
 };
