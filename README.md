@@ -16,7 +16,7 @@ TALK_AWAY_API_AUTH_URL = PATH_URL
 IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
 ```
 
-## ou rendez-vous dans le dossier utils pour update les variables const :
+## Ou rendez-vous dans le dossier utils à la racine du projet pour update les variables const :
 ```
 export const TALK_AWAY_API_BASE_URL = PATH_URL
 export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
