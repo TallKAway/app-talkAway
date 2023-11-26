@@ -12,11 +12,9 @@
 
 ```sh
 # Connexion API
-
 TALK_AWAY_API_AUTH_URL = PATH_URL
 
 # La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
-
 IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
 ```
 
@@ -24,11 +22,9 @@ IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
 
 ```sh
 # Connexion API
-
 export const TALK_AWAY_API_BASE_URL = PATH_URL
 
 # La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
-
 export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
 ```
 
