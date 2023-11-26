@@ -19,7 +19,7 @@ export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
 
 ```
 
-### Ou Utilisez les variables d'environnements:
+### Ou utilisez les variables d'environnements:
 
 Si vous choisissez cette méthode, il faut changer les importations dans chaque fichier core/api et décommenter les import de @env
 
