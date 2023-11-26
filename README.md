@@ -8,24 +8,27 @@
 
 </h1>
 
-### Utilisez les variables d'environnements :
-
-```sh
-# Connexion API
-TALK_AWAY_API_AUTH_URL = PATH_URL
-
-# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
-IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
-```
-
-### Ou rendez-vous dans le dossier utils à la racine du projet pour update les variables const :
+### Rendez-vous dans le dossier utils à la racine du projet pour update les variables const :
 
 ```sh
 # Connexion API
 export const TALK_AWAY_API_BASE_URL = PATH_URL
 
-# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine
+# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine à la place de {0.0.0.0}
 export const IPCONFIG_API_BASE_URL = 'http://{0.0.0.0}:3007';
+
+```
+
+### Ou Utilisez les variables d'environnements:
+
+Si vous choisissez cette méthode, il faut changer les importations dans chaque fichier core/api et décommenter les import de @env
+
+```sh
+# Connexion API
+TALK_AWAY_API_AUTH_URL = PATH_URL
+
+# La variable IPCONFIG_API_BASE_URL attend l'address IPV4 de votre machine à la place de {0.0.0.0}
+IPCONFIG_API_BASE_URL = "http://{0.0.0.0}:3007"
 ```
 
 ### Pour run le projet :
@@ -36,7 +39,8 @@ npm install
 npx expo start
 ```
 
-## Librairies utilisées : 
-- react-navigattion
-- react-native-svg
-- react-native-vector-icons
+## Librairies utilisées :
+
+-   react-navigattion
+-   react-native-svg
+-   react-native-vector-icons
